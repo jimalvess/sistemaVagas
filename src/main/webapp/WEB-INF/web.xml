@@ -8,10 +8,12 @@
 	<welcome-file-list>
 		<welcome-file>UsuarioController</welcome-file>
 	</welcome-file-list>
+	
 	<servlet>
 		<servlet-name>UsuarioController</servlet-name>
 		<servlet-class>sistemaVagas.controller.UsuarioController</servlet-class>
 	</servlet>
+	
 	<servlet-mapping>
 		<servlet-name>UsuarioController</servlet-name>
 		<url-pattern>/usuario</url-pattern>

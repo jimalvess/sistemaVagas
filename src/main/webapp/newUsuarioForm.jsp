@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" href="/css/newUsuario.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/newUsuario.css" />
 <title>Adicionar Novo Usuário</title>
 </head>
 <body>
