@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app>
+  <display-name>Archetype Created Web Application</display-name>
+  <servlet>
+  	<servlet-name>PrimeiroServlet</servlet-name>
+  	<display-name>PrimeiroServlet</display-name>
+  	<description></description>
+  	<servlet-class>sistemaVagas.PrimeiroServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>PrimeiroServlet</servlet-name>
+  	<url-pattern>/PrimeiroServlet</url-pattern>
+  </servlet-mapping>
+</web-app>
