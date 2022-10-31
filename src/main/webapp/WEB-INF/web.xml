@@ -1,15 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<web-app
+  xmlns="http://java.sun.com/xml/ns/j2ee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+  version="2.5">
+	<display-name>sistemaVagas</display-name>
+	<welcome-file-list>
+		<welcome-file>UsuarioController</welcome-file>
+	</welcome-file-list>
+	<servlet>
+		<servlet-name>UsuarioController</servlet-name>
+		<servlet-class>sistemaVagas.controller.UsuarioController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UsuarioController</servlet-name>
+		<url-pattern>/usuario</url-pattern>
+	</servlet-mapping>
 
-<web-app>
-  <display-name>Archetype Created Web Application</display-name>
-  <servlet>
-  	<servlet-name>PrimeiroServlet</servlet-name>
-  	<display-name>PrimeiroServlet</display-name>
-  	<description></description>
-  	<servlet-class>sistemaVagas.PrimeiroServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-  	<servlet-name>PrimeiroServlet</servlet-name>
-  	<url-pattern>/PrimeiroServlet</url-pattern>
-  </servlet-mapping>
+	<context-param>
+		<param-name>dbURL</param-name>
+		<param-value>jdbc:mysql://localhost:3306/sistemavagas</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>dbUsername</param-name>
+		<param-value>root</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>dbPassword</param-name>
+		<param-value>12345</param-value>
+	</context-param>
+
 </web-app>
