@@ -53,7 +53,7 @@
 
 		<p id="description">Campos com * são obrigatórios:</p>
 
-		<form>
+		<!-- <form> -->
 
 			<div class="form-group">
 
@@ -123,20 +123,12 @@
 
 				<div class="form-row">
 
-<!-- Div do fone 1: -->
+<!-- Div do fone: -->
 
 					<div class="form-group">
-						<label for="tel1" id="tel1-label">Fone principal*</label> 
-						<input type="text" name="tel1" id="tel1" class="form-control" required
-							value="<c:out value='${usuario.tel1}'/>">
-					</div>
-
-<!-- Div do fone 2: -->
-
-					<div class="form-group" style="margin-left: 10px;">
-						<label for="tel2" id="tel2-label">Fone secundário</label> 
-						<input type="text" name="tel2" class="form-control"
-							value="<c:out value='${usuario.tel2}'/>">
+						<label for="fone" id="fone-label">Fone principal*</label> 
+						<input type="text" name="fone" id="tel1" class="form-control" required
+							value="<c:out value='${usuario.fone}'/>">
 					</div>
 
 <!-- Div do cep: -->
@@ -231,17 +223,13 @@
 						</select>
 					</div>
 
-<!-- Div de Representante: -->
+<!-- Div de Fornecedor: -->
 
 					<div class="form-group form-check"><br>
-						<input type="checkbox" name="representante" class="form-check-input"> <label for="representante"
-							id="fornecedor" class="form-check-label">
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Marque se for representante</label><br>
 						<input type="checkbox" name="fornecedor" class="form-check-input">
 						<label for="fornecedor" id="fornecedor" class="form-check-label">
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Marque se for fornecedor</label>
 					</div>
-
 
 <!-- Linha sepadadora: -->
 
@@ -270,15 +258,6 @@
 							value="<c:out value='${usuario.bairro}'/>">
 					</div>
 
-<!-- Div da instituicao: -->
-
-					<div class="form-group" style="margin-left: 10px;">
-						<label for="instituicao" id="instituicao">Instituição</label> 
-						<input type="text" name="instituicao" class="form-control"
-							value="<c:out value='${usuario.localidade}'/>"
-							placeholder="ultima escola frequentada">
-					</div>
-
 <!-- Div de idiomas: -->
 
 					<div class="form-group" style="margin-left: 10px;">
@@ -300,15 +279,6 @@
 						</select>
 					</div>
 
-<!-- Div de Tecnologias: -->
-
-					<div class="form-group" style="margin-left: 10px;">
-						<label for="tecnologias" id="tecnologias">Tecnologias Conhecidas</label> 
-						<input type="text" name="tecnologias" class="form-control"
-							value="<c:out value='${usuario.tecnologias}'/>"
-							placeholder="separe por vírgula">
-					</div>
-
 				</div>
 
 <!-- Nova linha de duas colunas: -->
@@ -322,15 +292,6 @@
 						<input type="text" name="competencias" id="competencias" class="form-control" required
 							value="<c:out value='${usuario.competencias}'/>"
 							placeholder="separe por vírgula">
-					</div>
-
-<!-- Div da tempo de atuação: -->
-
-					<div class="form-group" style="margin-left: 10px;">
-						<label for="tempoAtuacao" id="tempoAtuacao-label">Tempo de Atuação*</label> 
-						<input type="text" name="escolaridade" class="form-control" required
-							value="<c:out value='${usuario.tempoAtuacao}'/>"
-							placeholder="número de meses">
 					</div>
 
 <!-- Div do site: -->
@@ -390,6 +351,7 @@ Depos...
 					<div class="form-group" style="padding-top: 2%; padding-left: 10%;">
 						<button id="submit" type="submit" class="btn btn-primary">Enviar as Informações</button>
 					</div>
+				</div>
 				</div>
 		</form>
 
