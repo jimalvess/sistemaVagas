@@ -7,7 +7,7 @@
 
 <!-- Imports -->
 
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="webjars/bootstrap/4.1.3/css/bootstrap.min.css"
 	rel="stylesheet" />
 <%-- <link rel="stylesheet" href="${pageContext.request.contextPath}/css/newUsuario.css" /> --%>
@@ -25,6 +25,79 @@
 <script
 	src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+    <!-- JQuery para buscar o CEP -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+
+
+<script>
+
+    $(document).ready(function() {
+
+        function limpa_formulário_cep() {
+            
+            // Limpa valores do formulário de cep.
+            $("#logradouro").val("");
+            $("#bairro").val("");
+            $("#localidade").val("");
+            $("#uf").val("");
+        }
+        
+        //Quando o campo cep perde o foco.
+        $("#cep").blur(function() {
+
+            //Nova variável "cep" somente com dígitos.
+            var cep = $(this).val().replace(/\D/g, '');
+
+            //Verifica se campo cep possui valor informado.
+            if (cep != "") {
+
+                //Expressão regular para validar o CEP.
+                var validacep = /^[0-9]{8}$/;
+
+                //Valida o formato do CEP.
+                if(validacep.test(cep)) {
+
+                    //Preenche os campos com "..." enquanto consulta webservice.
+                    $("#rua").val("...");
+                    $("#logradouro").val("...");
+                    $("#localidade").val("...");
+                    $("#uf").val("...");
+
+                    //Consulta o webservice viacep.com.br/
+                    $.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+
+                        if (!("erro" in dados)) {
+                            //Atualiza os campos com os valores da consulta.
+                            $("#logradouro").val(dados.logradouro);
+                            $("#bairro").val(dados.bairro);
+                            $("#localidade").val(dados.localidade);
+                            $("#uf").val(dados.uf);
+                        } //end if.
+                        else {
+                            //CEP pesquisado não foi encontrado.
+                            limpa_formulário_cep();
+                            alert("CEP não encontrado.");
+                        }
+                    });
+                } //end if.
+                else {
+                    //cep é inválido.
+                    limpa_formulário_cep();
+                    alert("Formato de CEP inválido.");
+                }
+            } //end if.
+            else {
+                //cep sem valor, limpa formulário.
+                limpa_formulário_cep();
+            }
+        });
+    });
+
+</script>
+    
 
 <!-- nome na barra: -->
 
@@ -134,25 +207,24 @@
 <!-- Div do cep: -->
 
 					<div class="form-group" style="margin-left: 10px;">
-						<label for="cep" id="login">CEP*</label> 
-						<input type="text" name="cep" class="form-control" required
-							value="<c:out value='${usuario.cep}'/>"
-							placeholder="somente números">
+						<label for="cep">CEP*</label>  <!-- id="cep" --> 
+						<input type="text" id="cep" class="form-control" required
+							value="<c:out value='${usuario.cep}'/>">
 					</div>
 
 <!-- Div da rua: -->
 
 					<div class="form-group" style="margin-left: 10px;">
-						<label for="logradouro" id="logradouro">Rua*</label> 
-						<input type="text" name="logradouro" class="form-control" required
+						<label for="logradouro">Rua*</label> <!-- id="logradouro" --> 
+						<input type="text" id="logradouro" class="form-control" required
 							value="<c:out value='${usuario.logradouro}'/>">
 					</div>
 
 <!-- Div de número: -->
 
 					<div class="form-group" style="margin-left: 10px;">
-						<label for="numero" id="logradouro">nº*</label> 
-						<input type="text" name="numero" class="form-control" required
+						<label for="numero">nº*</label> <!-- id="numero" --> 
+						<input type="text" id="numero" class="form-control" required
 							value="<c:out value='${usuario.numero}'/>">
 					</div>
 
@@ -166,8 +238,7 @@
 
 					<div class="form-group">
 						<label for="complemento" id="complemento-label">Complemento</label>
-						<input type="text" name="complemento" id="complemento"
-							class="form-control"
+						<input type="text" id="complemento" class="form-control"
 							value="<c:out value='${usuario.complemento}'/>">
 					</div>
 
@@ -175,52 +246,24 @@
 
 					<div class="form-group" style="margin-left: 10px;">
 						<label for="bairro" id="bairro-label">Bairro*</label> 
-						<input type="text" name="bairro" class="form-control" required
+						<input type="text" id="bairro" class="form-control" required
 							value="<c:out value='${usuario.bairro}'/>">
 					</div>
 
 <!-- Div da cidade: -->
 
 					<div class="form-group" style="margin-left: 10px;">
-						<label for="localidade" id="localidade">Cidade*</label> 
-						<input type="text" name="localidade" class="form-control" required
+						<label for="localidade">Cidade*</label> <!-- id="localidade" --> 
+						<input type="text" id="localidade" class="form-control" required
 							value="<c:out value='${usuario.localidade}'/>">
 					</div>
 
 <!-- Div do UF: -->
 
 					<div class="form-group" style="margin-left: 10px;">
-						<label for="uf" id="uf">UF*</label> 
-						<select class="form-control form-control-sm" required>
-							<option value="">Selecione</option>
-							<option value="<c:out value='${usuario.uf}'/>">AC</option>
-							<option value="<c:out value='${usuario.uf}'/>">AL</option>
-							<option value="<c:out value='${usuario.uf}'/>">AM</option>
-							<option value="<c:out value='${usuario.uf}'/>">AP</option>
-							<option value="<c:out value='${usuario.uf}'/>">BA</option>
-							<option value="<c:out value='${usuario.uf}'/>">CE</option>
-							<option value="<c:out value='${usuario.uf}'/>">DF</option>
-							<option value="<c:out value='${usuario.uf}'/>">ES</option>
-							<option value="<c:out value='${usuario.uf}'/>">GO</option>
-							<option value="<c:out value='${usuario.uf}'/>">MA</option>
-							<option value="<c:out value='${usuario.uf}'/>">MS</option>
-							<option value="<c:out value='${usuario.uf}'/>">MT</option>
-							<option value="<c:out value='${usuario.uf}'/>">MG</option>
-							<option value="<c:out value='${usuario.uf}'/>">PA</option>
-							<option value="<c:out value='${usuario.uf}'/>">PB</option>
-							<option value="<c:out value='${usuario.uf}'/>">PR</option>
-							<option value="<c:out value='${usuario.uf}'/>">PE</option>
-							<option value="<c:out value='${usuario.uf}'/>">PI</option>
-							<option value="<c:out value='${usuario.uf}'/>">RJ</option>
-							<option value="<c:out value='${usuario.uf}'/>">RN</option>
-							<option value="<c:out value='${usuario.uf}'/>">RS</option>
-							<option value="<c:out value='${usuario.uf}'/>">RO</option>
-							<option value="<c:out value='${usuario.uf}'/>">RR</option>
-							<option value="<c:out value='${usuario.uf}'/>">SC</option>
-							<option value="<c:out value='${usuario.uf}'/>">SP</option>
-							<option value="<c:out value='${usuario.uf}'/>">SE</option>
-							<option value="<c:out value='${usuario.uf}'/>">TO</option>
-						</select>
+						<label for="uf">UF*</label> <!-- id="uf" --> 
+						<input type="text" id="uf" class="form-control" required
+							value="<c:out value='${usuario.uf}'/>">
 					</div>
 
 <!-- Div de Fornecedor: -->
@@ -261,6 +304,14 @@
 <!-- Div de idiomas: -->
 
 					<div class="form-group" style="margin-left: 10px;">
+						<label for="idiomas">UF*</label> <!-- id="uf" --> 
+						<input type="text" id="idiomas" class="form-control" required
+							value="<c:out value='${usuario.idiomas}'/>">
+					</div>
+
+<!-- Idiomas em dropdown: 
+
+					<div class="form-group" style="margin-left: 10px;">
 						<label for="idiomas" id="idiomas">Idiomas</label> 
 						<select class="form-control form-control-sm">
 							<option value="">Selecione</option>
@@ -278,6 +329,7 @@
 								Avançado</option>
 						</select>
 					</div>
+					-->
 
 				</div>
 
