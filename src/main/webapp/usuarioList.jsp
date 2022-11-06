@@ -67,8 +67,7 @@
 				<th style="padding-left: 5px; padding-bottom: 3px; height: 30px; text-align: center">
 				<strong style="font-size: 12px;">Email</strong></th>
 				<th style="padding-left: 5px; padding-bottom: 3px; height: 30px; text-align: center">
-				<strong style="font-size: 12px; text-align: center">Fone</strong></th>
-				<!-- <th>Tel2</th> -->
+				<strong style="font-size: 12px;">Fone</strong></th>
 				<th style="padding-left: 5px; padding-bottom: 3px; height: 30px; text-align: center">
 				<strong style="font-size: 12px;">Rua</strong></th>
 				<th style="padding-left: 5px; padding-bottom: 3px; height: 30px text-align: center;">
@@ -82,16 +81,13 @@
 				<th style="padding-left: 5px; padding-bottom: 3px; height: 30px text-align: center;">
 				<strong style="font-size: 12px;">UF</strong></th>
 				<!-- <th>CEP</th
-				<!-- <th>Nível</th>
 				<th>Descrição</th> -->
 				<th style="padding-left: 5px; padding-bottom: 3px; height: 30px text-align: center;">
 				<strong style="font-size: 12px;">Foto</strong></th>
 				<!-- <th>Status</th>
 				<th>Login</th>
 				<th>Senha</th>
-				<th>Nova Senha</th>
 				<th>Permissões</th>
-				<th>Token</th>
 				<th>Vagas</th> -->
 				<th style="padding-left: 5px; padding-bottom: 3px; height: 30px text-align: center;">
 				<strong style="font-size: 12px;">Redes</strong></th>
@@ -102,17 +98,12 @@
 				<th style="padding-left: 5px; padding-bottom: 3px; height: 30px; text-align: center">
 				<strong style="font-size: 12px;">Escolaridade</strong></th>
 				<th style="padding-left: 5px; padding-bottom: 3px; height: 30px; text-align: center">
-				<strong style="font-size: 12px;">Atuação</strong></th>
-				<th style="padding-left: 5px; padding-bottom: 3px; height: 30px; text-align: center">
 				<strong style="font-size: 12px;">Idiomas</strong></th>
-				<th style="padding-left: 5px; padding-bottom: 3px; height: 30px; text-align: center">
-				<strong style="font-size: 12px;">Tecnologias</strong></th>
 				<th style="padding-left: 5px; padding-bottom: 3px; height: 30px; text-align: center">
 				<strong style="font-size: 12px;">Competências</strong></th>
 				<!-- <th>Fornecedor</th>
 				<th>CNPJ</th>
-				<th>Site</th>
-				<th>Representante</th> -->
+				<th>Site</th>-->
 				<th style="padding-left: 5px; padding-bottom: 3px; height: 30px; text-align: center">
 				<strong style="font-size: 12px;">Ações</strong></th>
 
@@ -132,7 +123,7 @@
 						</p></td>
 					<td style="padding-left: 5px; padding-bottom: 3px;"><p
 							style="font-size: 12px; text-align: center">
-							<c:out value="${usuario.tel1}" />
+							<c:out value="${usuario.fone}" />
 						</p></td>
 					<%-- <td class="align-top"><c:out value="${usuario.tel2}" /></td> --%>
 					<td style="padding-left: 5px; padding-bottom: 3px;"><p
@@ -160,8 +151,7 @@
 							<c:out value="${usuario.uf}" />
 						</p></td>
 					<%-- <td style="padding-left: 5px; padding-bottom: 3px;"><p style="font-size:12px;text-align: center"><c:out value="${usuario.cep}" /></p></td> --%>
-					<%-- <td><c:out value="${usuario.nivel}" /></td>
-					<td><c:out value="${usuario.descricao}" /></td> --%>
+					<%-- <td><c:out value="${usuario.descricao}" /></td> --%>
 					<td style="padding-left: 5px; padding-bottom: 3px;"><p
 							style="font-size: 12px; text-align: center">
 							<c:out value="${usuario.foto}" />
@@ -169,9 +159,7 @@
 					<%-- <td><c:out value="${usuario.status}" /></td>
 					<td><c:out value="${usuario.login}" /></td>
 					<td><c:out value="${usuario.senha}" /></td>
-					<td><c:out value="${usuario.novaSenha}" /></td>
 					<td><c:out value="${usuario.permissoes}" /></td>
-					<td><c:out value="${usuario.token}" /></td>
 					<td><c:out value="${usuario.vagas}" /></td> --%>
 					<td style="padding-left: 5px; padding-bottom: 3px;"><p
 							style="font-size: 12px; text-align: center">
@@ -187,15 +175,7 @@
 						</p></td>
 					<td style="padding-left: 5px; padding-bottom: 3px;"><p
 							style="font-size: 12px; text-align: center">
-							<c:out value="${usuario.tempoAtuacao}" />
-						</p></td>
-					<td style="padding-left: 5px; padding-bottom: 3px;"><p
-							style="font-size: 12px; text-align: center">
 							<c:out value="${usuario.idiomas}" />
-						</p></td>
-					<td style="padding-left: 5px; padding-bottom: 3px;"><p
-							style="font-size: 12px; text-align: center">
-							<c:out value="${usuario.tecnologias}" />
 						</p></td>
 					<td style="padding-left: 5px; padding-bottom: 3px;"><p
 							style="font-size: 12px; text-align: center">
@@ -203,8 +183,7 @@
 						</p></td>
 					<%-- <td><c:out value="${usuario.fornecedor}" /></td>
 					<td><c:out value="${usuario.cnpj}" /></td>
-					<td><c:out value="${usuario.site}" /></td>
-					<td><c:out value="${usuario.representante}" /></td> --%>
+					<td><c:out value="${usuario.site}" /></td>--%>
 					<td style="padding-left: 5px; padding-bottom: 3px;">
 					
 <!-- Botão de editar -->		

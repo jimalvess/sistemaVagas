@@ -46,24 +46,20 @@ public class UsuarioController extends HttpServlet {
 			case "insert":
 				String nome = request.getParameter("nome");
 				String email = request.getParameter("email");
-				String tel1 = request.getParameter("tel1");
-				String tel2 = request.getParameter("tel2");
+				String fone = request.getParameter("fone");
 				String logradouro = request.getParameter("logradouro");
-				int numero = Integer.parseInt(request.getParameter("numero"));
+				String numero = request.getParameter("numero");
 				String complemento = request.getParameter("complemento");
 				String bairro = request.getParameter("bairro");
 				String localidade = request.getParameter("localidade");
 				String uf = request.getParameter("uf");
 				String cep = request.getParameter("cep");
-				int nivel = Integer.parseInt(request.getParameter("nivel"));
 				String descricao = request.getParameter("descricao");
 				String foto = request.getParameter("foto");
-				boolean status = Boolean.parseBoolean(request.getParameter("status"));
+				Boolean status = Boolean.parseBoolean(request.getParameter("status"));
 				String login = request.getParameter("login");
 				String senha = request.getParameter("senha");
-				String novaSenha = request.getParameter("novaSenha");
 				String permissoes = request.getParameter("permissoes");
-				String token = request.getParameter("token");
 				String vagas = request.getParameter("vagas");
 				String redesSociais = request.getParameter("redesSociais");
 				String denuncias = request.getParameter("denuncias");
@@ -71,20 +67,16 @@ public class UsuarioController extends HttpServlet {
 				String cpf = request.getParameter("cpf");
 				String dataNasc = request.getParameter("dataNasc");
 				String escolaridade = request.getParameter("escolaridade");
-				String tempoAtuacao = request.getParameter("tempoAtuacao");
 				String idiomas = request.getParameter("idiomas");
-				String tecnologias = request.getParameter("tecnologias");
 				String competencias = request.getParameter("competencias");
-				boolean fornecedor = Boolean.parseBoolean(request.getParameter("fornecedor"));
+				Boolean fornecedor = Boolean.parseBoolean(request.getParameter("fornecedor"));
 				String cnpj = request.getParameter("cnpj");
 				String site = request.getParameter("site");
-				boolean representante = Boolean.parseBoolean(request.getParameter("representante"));
 				
 				UsuarioDTO newUsuario= new UsuarioDTO(
 						nome,
 						email,
-						tel1,
-						tel2,
+						fone,
 						logradouro,
 						numero,
 						complemento,
@@ -92,15 +84,12 @@ public class UsuarioController extends HttpServlet {
 						localidade,
 						uf,
 						cep,
-						nivel,
 						descricao,
 						foto,
 						status,
 						login,
 						senha,
-						novaSenha,
 						permissoes,
-						token,
 						vagas,
 						redesSociais,
 						denuncias,
@@ -108,14 +97,11 @@ public class UsuarioController extends HttpServlet {
 						cpf,
 						dataNasc,
 						escolaridade,
-						tempoAtuacao,
 						idiomas,
-						tecnologias,
 						competencias,
 						fornecedor,
 						cnpj,
-						site,
-						representante);
+						site);
 				
 				this.usuarioService.addNewUsuario(newUsuario);
 				response.sendRedirect("usuario");
@@ -158,27 +144,23 @@ public class UsuarioController extends HttpServlet {
 
 	}
 	private void updateUsuario(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-		int id = Integer.parseInt(request.getParameter("id"));
+		Integer id = Integer.parseInt(request.getParameter("id"));
 		String nome = request.getParameter("nome");
 		String email = request.getParameter("email");
-		String tel1 = request.getParameter("tel1");
-		String tel2 = request.getParameter("tel2");
+		String fone = request.getParameter("fone");
 		String logradouro = request.getParameter("logradouro");
-		int numero = Integer.parseInt(request.getParameter("numero"));
+		String numero = request.getParameter("numero");
 		String complemento = request.getParameter("complemento");
 		String bairro = request.getParameter("bairro");
 		String localidade = request.getParameter("localidade");
 		String uf = request.getParameter("uf");
 		String cep = request.getParameter("cep");
-		int nivel = Integer.parseInt(request.getParameter("nivel"));
 		String descricao = request.getParameter("descricao");
 		String foto = request.getParameter("foto");
-		boolean status = Boolean.parseBoolean(request.getParameter("status"));
+		Boolean status = Boolean.parseBoolean(request.getParameter("status"));
 		String login = request.getParameter("login");
 		String senha = request.getParameter("senha");
-		String novaSenha = request.getParameter("novaSenha");
 		String permissoes = request.getParameter("permissoes");
-		String token = request.getParameter("token");
 		String vagas = request.getParameter("vagas");
 		String redesSociais = request.getParameter("redesSociais");
 		String denuncias = request.getParameter("denuncias");
@@ -186,21 +168,17 @@ public class UsuarioController extends HttpServlet {
 		String cpf = request.getParameter("cpf");
 		String dataNasc = request.getParameter("dataNasc");
 		String escolaridade = request.getParameter("escolaridade");
-		String tempoAtuacao = request.getParameter("tempoAtuacao");
 		String idiomas = request.getParameter("idiomas");
-		String tecnologias = request.getParameter("tecnologias");
 		String competencias = request.getParameter("competencias");
-		boolean fornecedor = Boolean.parseBoolean(request.getParameter("fornecedor"));
+		Boolean fornecedor = Boolean.parseBoolean(request.getParameter("fornecedor"));
 		String cnpj = request.getParameter("cnpj");
 		String site = request.getParameter("site");
-		boolean representante = Boolean.parseBoolean(request.getParameter("representante"));
 
 		UsuarioDTO newUsuario = new UsuarioDTO(
 				id,
 				nome,
 				email,
-				tel1,
-				tel2,
+				fone,
 				logradouro,
 				numero,
 				complemento,
@@ -208,15 +186,12 @@ public class UsuarioController extends HttpServlet {
 				localidade,
 				uf,
 				cep,
-				nivel,
 				descricao,
 				foto,
 				status,
 				login,
 				senha,
-				novaSenha,
 				permissoes,
-				token,
 				vagas,
 				redesSociais,
 				denuncias,
@@ -224,14 +199,11 @@ public class UsuarioController extends HttpServlet {
 				cpf,
 				dataNasc,
 				escolaridade,
-				tempoAtuacao,
 				idiomas,
-				tecnologias,
 				competencias,
 				fornecedor,
 				cnpj,
-				site,
-				representante);
+				site);
 		this.usuarioService.updateUsuario(newUsuario);
 		response.sendRedirect("usuario");
 	}
