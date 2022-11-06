@@ -124,7 +124,7 @@
 	<div id="container-fluid"
 		style="padding-top: 0.5%; padding-left: 1%; padding-right: 1%;">
 
-		<p id="description">Campos com * são obrigatórios:</p>
+		<p id="description">Campos com <span style="color: red;">*</span> são obrigatórios:</p>
 
 		<!-- <form> -->
 
@@ -143,31 +143,31 @@
 						value="<c:out value='${usuario.id}'/>" />
 				</c:if>
 
-<!-- Container do form em duas colunas: -->
+<!-- Container do form em colunas: -->
 
 				<div class="form-row">
 
 <!-- Div do nome: -->
 
 					<div class="form-group">
-						<label for="nome" id="name-label">Nome*</label> <input type="text"
-							name="nome" id="nome" class="form-control" required
+						<label for="nome" id="nome-label">Nome<span style="color: red;">*</span></label> 
+						<input type="text" pattern="([aA-zZ]+)" name="nome" id="nome" class="form-control" required
 							value="<c:out value='${usuario.name}'/>">
 					</div>
 
 <!-- Div do email: -->
 
 					<div class="form-group" style="margin-left: 10px;">
-						<label for="email" id="email-label">E-mail*</label> <input
-							type="text" name="email" class="form-control" required
+						<label for="email" id="email-label">E-mail<span style="color: red;">*</span></label> 
+						<input type="text" name="email" id="email" class="form-control" required
 							value="<c:out value='${usuario.email}'/>">
 					</div>
 
 <!-- Div do login: -->
 
 					<div class="form-group" style="margin-left: 10px;">
-						<label for="login" id="login">Login*</label> <input type="text"
-							name="login" class="form-control" required
+						<label for="login" id="login-label">Login<span style="color: red;">*</span></label>
+						<input type="text" name="login" id="login" class="form-control" required
 							value="<c:out value='${usuario.login}'/>"
 							placeholder="seu nome de entrada">
 					</div>
@@ -175,8 +175,8 @@
 <!-- Div da senha: -->
 
 					<div class="form-group" style="margin-left: 10px;">
-						<label for="senha" id="senha">Senha*</label> <input
-							type="password" name="senha" class="form-control" required
+						<label for="senha" id="senha-label">Senha<span style="color: red;">*</span></label> <input
+							type="password" name="senha" id="senha" class="form-control" required
 							value="<c:out value='${usuario.senha}'/>"
 							placeholder="sua senha de entrada">
 					</div>
@@ -184,30 +184,39 @@
 <!-- Div de cpf: -->
 
 					<div class="form-group" style="margin-left: 10px;">
-						<label for="cpf" id="cpf">CPF*</label> <input type="text"
-							name="cpf" class="form-control" required
+						<label for="cpf" id="cpf-label">CPF<span style="color: red;">*</span></label> 
+						<input type="text" name="cpf" id="cpf" class="form-control" required
 							value="<c:out value='${usuario.cpf}'/>"
 							placeholder="somente números">
 					</div>
 
 				</div>
 
-<!-- Nova linha de duas colunas: -->
+<!-- Nova linha em colunas: -->
 
 				<div class="form-row">
 
-<!-- Div do fone: -->
+<!-- Div da data de nascimento: -->
 
 					<div class="form-group">
-						<label for="fone" id="fone-label">Fone principal*</label> 
-						<input type="text" name="fone" id="tel1" class="form-control" required
+						<label for="dataNasc" id="dataNasc-label">Data de Nascimento<span style="color: red;">*</span></label> 
+						<input type="text" name="dataNasc" id="dataNasc" class="form-control" required
+							value="<c:out value='${usuario.dataNasc}'/>"
+							placeholder="somente números">
+					</div>
+
+<!-- Div do fone: -->
+
+					<div class="form-group" style="padding-left: 0.8%;">
+						<label for="fone" id="fone-label">Fone:<span style="color: red;">*</span></label>
+						<input type="text" name="fone" id="fone" class="form-control" required
 							value="<c:out value='${usuario.fone}'/>">
 					</div>
 
 <!-- Div do cep: -->
 
 					<div class="form-group" style="margin-left: 10px;">
-						<label for="cep">CEP*</label>  <!-- id="cep" --> 
+						<label for="cep" id="cep-label" >CEP<span style="color: red;">*</span></label>
 						<input type="text" id="cep" class="form-control" required
 							value="<c:out value='${usuario.cep}'/>">
 					</div>
@@ -215,22 +224,22 @@
 <!-- Div da rua: -->
 
 					<div class="form-group" style="margin-left: 10px;">
-						<label for="logradouro">Rua*</label> <!-- id="logradouro" --> 
-						<input type="text" id="logradouro" class="form-control" required
+						<label for="logradouro" id="logradouro-label" >Rua<span style="color: red;">*</span></label> 
+						<input type="text" id="logradouro" name="logradouro" class="form-control" required
 							value="<c:out value='${usuario.logradouro}'/>">
 					</div>
 
 <!-- Div de número: -->
 
 					<div class="form-group" style="margin-left: 10px;">
-						<label for="numero">nº*</label> <!-- id="numero" --> 
-						<input type="text" id="numero" class="form-control" required
+						<label for="numero" id="numero-label" >nº<span style="color: red;">*</span></label>
+						<input type="text" id="numero" name="numero" class="form-control" required
 							value="<c:out value='${usuario.numero}'/>">
 					</div>
 
 				</div>
 
-<!-- Nova linha de duas colunas: -->
+<!-- Nova linha em colunas: -->
 
 				<div class="form-row">
 
@@ -238,170 +247,118 @@
 
 					<div class="form-group">
 						<label for="complemento" id="complemento-label">Complemento</label>
-						<input type="text" id="complemento" class="form-control"
+						<input type="text" id="complemento" name="complemento" class="form-control"
 							value="<c:out value='${usuario.complemento}'/>">
 					</div>
 
 <!-- Div do bairro: -->
 
 					<div class="form-group" style="margin-left: 10px;">
-						<label for="bairro" id="bairro-label">Bairro*</label> 
-						<input type="text" id="bairro" class="form-control" required
+						<label for="bairro" id="bairro-label">Bairro<span style="color: red;">*</span></label> 
+						<input type="text" id="bairro" name="bairro" class="form-control" required
 							value="<c:out value='${usuario.bairro}'/>">
 					</div>
 
 <!-- Div da cidade: -->
 
 					<div class="form-group" style="margin-left: 10px;">
-						<label for="localidade">Cidade*</label> <!-- id="localidade" --> 
-						<input type="text" id="localidade" class="form-control" required
+						<label for="localidade" id="localidade-label" >Cidade<span style="color: red;">*</span></label> 
+						<input type="text" id="localidade" name="localidade" class="form-control" required
 							value="<c:out value='${usuario.localidade}'/>">
 					</div>
 
 <!-- Div do UF: -->
 
 					<div class="form-group" style="margin-left: 10px;">
-						<label for="uf">UF*</label> <!-- id="uf" --> 
-						<input type="text" id="uf" class="form-control" required
+						<label for="uf" id="uf-label" >UF<span style="color: red;">*</span></label>
+						<input type="text" id="uf" name="uf" class="form-control" required
 							value="<c:out value='${usuario.uf}'/>">
 					</div>
 
 <!-- Div de Fornecedor: -->
 
-					<div class="form-group form-check"><br>
-						<input type="checkbox" name="fornecedor" class="form-check-input">
-						<label for="fornecedor" id="fornecedor" class="form-check-label">
+					<div class="form-group form-check"><br><br>
+						<input type="checkbox" name="fornecedor-check" id="fornecedor-check" class="form-check-input">
+						<label for="fornecedor" id="fornecedor" class="text-primary">
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Marque se for fornecedor</label>
 					</div>
 
-<!-- Linha sepadadora: -->
-
-					<hr style="border-color: lightgray; box-sizing: border-box; width: 100%;" />
-
 				</div>
 
-<!-- Nova linha de duas colunas: -->
+<!-- Nova linha em colunas: -->
 
 				<div class="form-row">
 
-<!-- Div da data de nascimento: -->
-
-					<div class="form-group">
-						<label for="dataNasc" id="dataNasc-label">Data de Nascimento*</label> 
-						<input type="text" name="dataNasc" id="dataNasc" class="form-control" required
-							value="<c:out value='${usuario.dataNasc}'/>"
-							placeholder="somente números">
-					</div>
-
 <!-- Div da escolaridade: -->
 
-					<div class="form-group" style="margin-left: 10px;">
-						<label for="escolaridade" id="escolaridade-label">Escolaridade*</label>
-						<input type="text" name="escolaridade" class="form-control" required
-							value="<c:out value='${usuario.bairro}'/>">
+					<div class="form-group" style="padding-left: 0.1%">
+						<label for="escolaridade" id="escolaridade-label">Escolaridade<span style="color: red;">*</span></label>
+						<input type="text" name="escolaridade" id="escolaridade" class="form-control" required
+							value="<c:out value='${usuario.escolaridade}'/>">
 					</div>
 
 <!-- Div de idiomas: -->
 
-					<div class="form-group" style="margin-left: 10px;">
-						<label for="idiomas">UF*</label> <!-- id="uf" --> 
-						<input type="text" id="idiomas" class="form-control" required
+					<div class="form-group" style="margin-left: 0.8%;">
+						<label for="idiomas" id="idiomas-label" >Idiomas<span style="color: red;">*</span></label> 
+						<input type="text" name="idiomas" id="idiomas" class="form-control" required
 							value="<c:out value='${usuario.idiomas}'/>">
 					</div>
-
-<!-- Idiomas em dropdown: 
-
-					<div class="form-group" style="margin-left: 10px;">
-						<label for="idiomas" id="idiomas">Idiomas</label> 
-						<select class="form-control form-control-sm">
-							<option value="">Selecione</option>
-							<option value="<c:out value='${usuario.idiomas}'/>">Espanhol
-								Básico</option>
-							<option value="<c:out value='${usuario.idiomas}'/>">Espanhol
-								Intermediário</option>
-							<option value="<c:out value='${usuario.idiomas}'/>">Espanhol
-								Avançado</option>
-							<option value="<c:out value='${usuario.idiomas}'/>">Inglês
-								Básico</option>
-							<option value="<c:out value='${usuario.idiomas}'/>">Inglês
-								Intermediário</option>
-							<option value="<c:out value='${usuario.idiomas}'/>">Inglês
-								Avançado</option>
-						</select>
-					</div>
-					-->
-
-				</div>
-
-<!-- Nova linha de duas colunas: -->
-
-				<div class="form-row">
-
+					
 <!-- Div da data de competencias: -->
 
-					<div class="form-group">
-						<label for="competencias" id="competencias-label">Competências Conhecidas*</label> 
+					<div class="form-group" style="margin-left: 0.8%;">
+						<label for="competencias" id="competencias-label">Competências Conhecidas<span style="color: red;">*</span></label> 
 						<input type="text" name="competencias" id="competencias" class="form-control" required
 							value="<c:out value='${usuario.competencias}'/>"
-							placeholder="separe por vírgula">
+							placeholder="uma palavra para cada">
 					</div>
-
-<!-- Div do site: -->
+					
+<!-- Div de redes sociais: -->
 
 					<div class="form-group" style="margin-left: 10px;">
-						<label for="site" id="site">Seu site aqui</label> 
-						<input type="text" name="site" class="form-control"
+						<label for="redesSociais" id="redesSociais-label">Suas redes sociais</label> 
+						<input type="text" name="redesSociais" id="redesSociais"  class="form-control"
+							value="<c:out value='${usuario.redesSociais}'/>"
+							placeholder="links separados por vírgula">
+					</div>
+					
+					<!-- Div do site: -->
+
+					<div class="form-group" style="margin-left: 10px;">
+						<label for="site" id="site-label">Seu site aqui</label> 
+						<input type="text" name="site" id="site" class="form-control"
 							value="<c:out value='${usuario.site}'/>"
 							placeholder="comece com www...">
 					</div>
 
-<!-- Div de redes sociais: -->
-
-					<div class="form-group" style="margin-left: 10px;">
-						<label for="redesSociais" id="redesSociais">Suas redes sociais</label> 
-						<input type="text" name="redesSociais" class="form-control"
-							value="<c:out value='${usuario.redesSociais}'/>"
-							placeholder="separe seus links por vírgula">
-					</div>
-
-<!-- Div de cnpj: -->
-
-					<div class="form-group" style="margin-left: 10px;">
-						<label for="cnpj" id="cnpj">Você é uma empresa?</label> 
-						<input type="text" name="tecnologias" class="form-control"
-							value="<c:out value='${usuario.cnpj}'/>"
-							placeholder="CNPJ: somente números">
-					</div>
-
 				</div>
 
-<!-- responsável por colocar descrição e foto na mesma linha -->
+<!-- Nova linha em colunas: -->
 
 				<div class="form-row">
 
 <!-- Div descrição: 
-Colocar o 
-	value="<c:out value='${usuario.descricao}'/>"
+Colocar o value="<c:out value='${usuario.descricao}'/>"
 Depos...
 -->
-					<div class="form-group">
+					<div class="form-group" style="padding-left: 0.1%">
 						<label for="descricao" id="descricao-label">Fale mais de você...</label>
-						<textarea class="form-control" name="dataNasc" id="descricao"
-							rows="1" cols="50"></textarea>
+						<textarea class="form-control" name="dataNasc" id="descricao" rows="1" cols="50"></textarea>
 					</div>
 
 <!-- Div escolher foto: -->
 
 					<div class="form-group" style="padding-left: 1%;">
-						<label for="foto">Quer nos mandar sua foto?</label> 
+						<label for="foto" id="foto-label" >Quer nos mandar sua foto?</label> 
 						<input type="file" class="btn btn-light" id="foto"
 							value="<c:out value='${usuario.descricao}'/>">
 					</div>
 
 <!-- Div Botão Enviar: -->
 
-					<div class="form-group" style="padding-top: 2%; padding-left: 10%;">
-						<button id="submit" type="submit" class="btn btn-primary">Enviar as Informações</button>
+					<div class="form-group" style="padding-left: 9.8%;">
+						<br><button id="submit" type="submit" class="btn btn-primary" >Enviar as Informações</button>
 					</div>
 				</div>
 				</div>

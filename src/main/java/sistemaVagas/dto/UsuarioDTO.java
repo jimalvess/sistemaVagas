@@ -7,7 +7,7 @@ public class UsuarioDTO {
     private String email;
     private String fone;
     private String logradouro;
-    private Integer numero;
+    private String numero;
     private String complemento;
     private String bairro;
     private String localidade;
@@ -38,7 +38,7 @@ public class UsuarioDTO {
 	private String cnpj;
 	private String site;
 	
-	public UsuarioDTO(int id, String nome, String email, String fone, String logradouro, Integer numero,
+	public UsuarioDTO(int id, String nome, String email, String fone, String logradouro, String numero,
 			String complemento, String bairro, String localidade, String uf, String cep, String descricao,
 			String foto, Boolean status, String login, String senha, String permissoes,
 			String vagas, String redesSociais, String denuncias, String mensagens, String cpf, String dataNasc,
@@ -76,7 +76,7 @@ public class UsuarioDTO {
 		this.site = site;
 	}
 	
-	public UsuarioDTO(String nome, String email, String fone, String logradouro, Integer numero,
+	public UsuarioDTO(String nome, String email, String fone, String logradouro, String numero,
 			String complemento, String bairro, String localidade, String uf, String cep, String descricao,
 			String foto, Boolean status, String login, String senha, String permissoes,
 			String vagas, String redesSociais, String denuncias, String mensagens, String cpf, String dataNasc,
@@ -144,10 +144,10 @@ public class UsuarioDTO {
 	public void setLogradouro(String logradouro) {
 		this.logradouro = logradouro;
 	}
-	public int getNumero() {
+	public String getNumero() {
 		return numero;
 	}
-	public void setNumero(int numero) {
+	public void setNumero(String numero) {
 		this.numero = numero;
 	}
 	public String getComplemento() {

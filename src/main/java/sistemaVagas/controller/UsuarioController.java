@@ -48,7 +48,7 @@ public class UsuarioController extends HttpServlet {
 				String email = request.getParameter("email");
 				String fone = request.getParameter("fone");
 				String logradouro = request.getParameter("logradouro");
-				Integer numero = Integer.parseInt(request.getParameter("numero"));
+				String numero = request.getParameter("numero");
 				String complemento = request.getParameter("complemento");
 				String bairro = request.getParameter("bairro");
 				String localidade = request.getParameter("localidade");
@@ -149,7 +149,7 @@ public class UsuarioController extends HttpServlet {
 		String email = request.getParameter("email");
 		String fone = request.getParameter("fone");
 		String logradouro = request.getParameter("logradouro");
-		Integer numero = Integer.parseInt(request.getParameter("numero"));
+		String numero = request.getParameter("numero");
 		String complemento = request.getParameter("complemento");
 		String bairro = request.getParameter("bairro");
 		String localidade = request.getParameter("localidade");
