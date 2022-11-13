@@ -19,10 +19,10 @@ public class UsuarioDTO {
     private String login;
     private String senha;
     private String permissoes;
-	private String vagas;
+	private int vagas;
     private String redesSociais;
-    private String denuncias;
-    private String mensagens;
+    private int denuncias;
+    private int mensagens;
     
 	//Atribs de Candidato:
     
@@ -41,7 +41,7 @@ public class UsuarioDTO {
 	public UsuarioDTO(int id, String nome, String email, String fone, String logradouro, String numero,
 			String complemento, String bairro, String localidade, String uf, String cep, String descricao,
 			String foto, Boolean status, String login, String senha, String permissoes,
-			String vagas, String redesSociais, String denuncias, String mensagens, String cpf, String dataNasc,
+			int vagas, String redesSociais, int denuncias, int mensagens, String cpf, String dataNasc,
 			String escolaridade, String idiomas, String competencias,
 			boolean fornecedor, String cnpj, String site) {
 		super();
@@ -79,7 +79,7 @@ public class UsuarioDTO {
 	public UsuarioDTO(String nome, String email, String fone, String logradouro, String numero,
 			String complemento, String bairro, String localidade, String uf, String cep, String descricao,
 			String foto, Boolean status, String login, String senha, String permissoes,
-			String vagas, String redesSociais, String denuncias, String mensagens, String cpf, String dataNasc,
+			int vagas, String redesSociais, int denuncias, int mensagens, String cpf, String dataNasc,
 			String escolaridade, String idiomas, String competencias,
 			boolean fornecedor, String cnpj, String site) {
 		super();
@@ -219,29 +219,43 @@ public class UsuarioDTO {
 		this.permissoes = permissoes;
 	}
 
-	public String getVagas() {
+	public int getVagas() {
 		return vagas;
 	}
-	public void setVagas(String vagas) {
+
+	public void setVagas(int vagas) {
 		this.vagas = vagas;
 	}
+
+	public int getDenuncias() {
+		return denuncias;
+	}
+
+	public void setDenuncias(int denuncias) {
+		this.denuncias = denuncias;
+	}
+
+	public int getMensagens() {
+		return mensagens;
+	}
+
+	public void setMensagens(int mensagens) {
+		this.mensagens = mensagens;
+	}
+
+	public void setStatus(Boolean status) {
+		this.status = status;
+	}
+
+	public void setFornecedor(Boolean fornecedor) {
+		this.fornecedor = fornecedor;
+	}
+
 	public String getRedesSociais() {
 		return redesSociais;
 	}
 	public void setRedesSociais(String redesSociais) {
 		this.redesSociais = redesSociais;
-	}
-	public String getDenuncias() {
-		return denuncias;
-	}
-	public void setDenuncias(String denuncias) {
-		this.denuncias = denuncias;
-	}
-	public String getMensagens() {
-		return mensagens;
-	}
-	public void setMensagens(String mensagens) {
-		this.mensagens = mensagens;
 	}
 	public String getCpf() {
 		return cpf;

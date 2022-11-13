@@ -59,8 +59,8 @@ public class MensagemDAOImpl implements MensagemDAO{
 			int id = resultSet.getInt("id");
 			String assunto = resultSet.getString("assunto");
 			String detalhe = resultSet.getString("detalhe");
-			String emissor = resultSet.getString("emissor");
-			String destinatario = resultSet.getString("destinatario");
+			int emissor = resultSet.getInt("emissor");
+			int destinatario = resultSet.getInt("destinatario");
 			
 			MensagemDTO mensagem = new MensagemDTO(
 					id, 
@@ -92,8 +92,8 @@ public class MensagemDAOImpl implements MensagemDAO{
 		PreparedStatement statement = jdbcConnection.prepareStatement(sqlInsert);
 		statement.setString(1, newMensagem.getAssunto());
 		statement.setString(2, newMensagem.getDetalhe());
-		statement.setString(3, newMensagem.getEmissor());
-		statement.setString(4, newMensagem.getDestinatario());
+		statement.setInt(3, newMensagem.getEmissor());
+		statement.setInt(4, newMensagem.getDestinatario());
 		
 		boolean rowInserted = statement.executeUpdate() > 0;
 		statement.close();
@@ -114,8 +114,8 @@ public class MensagemDAOImpl implements MensagemDAO{
 		PreparedStatement statement = jdbcConnection.prepareStatement(sql);
 		statement.setString(1, mensagem.getAssunto());
 		statement.setString(2, mensagem.getDetalhe());
-		statement.setString(3, mensagem.getEmissor());
-		statement.setString(4, mensagem.getDestinatario());
+		statement.setInt(3, mensagem.getEmissor());
+		statement.setInt(4, mensagem.getDestinatario());
 		statement.setInt(5, mensagem.getId());
 		
 		boolean rowUpdated = statement.executeUpdate() > 0;
@@ -154,8 +154,8 @@ public class MensagemDAOImpl implements MensagemDAO{
 		if (resultSet.next()) {
 			String assunto = resultSet.getString("assunto");
 			String detalhe = resultSet.getString("detalhe");
-			String emissor = resultSet.getString("emissor");
-			String destinatario = resultSet.getString("destinatario");
+			int emissor = resultSet.getInt("emissor");
+			int destinatario = resultSet.getInt("destinatario");
 			
 			mensagem = new MensagemDTO(
 					id, 

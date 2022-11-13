@@ -188,7 +188,7 @@
 					
 <!-- Botão de editar -->		
 			
-						<a href="usuario?action=edit&id=<c:out value='${usuario.id}' />">
+						<a href="usuario?action=update&id=<c:out value='${usuario.id}' />">
 							<button type="button" class="btn btn-warning btn-circle"
 								style="
 								  width: 30px;

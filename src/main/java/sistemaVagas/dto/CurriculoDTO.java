@@ -4,8 +4,8 @@ public class CurriculoDTO {
 	
 	private int id;
 	private String nome;
-	private String tel1;
-	private String tel2;
+	private String email;
+	private String fone;
 	private String logradouro;
 	private String numero;
 	private String complemento;
@@ -14,12 +14,12 @@ public class CurriculoDTO {
 	private String uf;
 	private String cep;
 	private String descricao;
+	private String foto;
 	private String cpf;
 	private String dataNasc;
 	private String escolaridade;
 	private String instituicao;
 	private String tempoAtuacao;
-	private String vagas;
 	private String tecnologias;
 	private String redesSociais;
 	private String competencias;
@@ -27,15 +27,15 @@ public class CurriculoDTO {
 	private boolean viagem;
 	private String idiomas;
 	
-	public CurriculoDTO(int id, String nome, String tel1, String tel2, String logradouro, String numero,
-			String complemento, String bairro, String localidade, String uf, String cep, String descricao, String cpf,
-			String dataNasc, String escolaridade, String instituicao, String tempoAtuacao, String vagas,
-			String tecnologias, String redesSociais, String competencias, String cnh, boolean viagem, String idiomas) {
+	public CurriculoDTO(int id, String nome, String email, String fone, String logradouro, String numero,
+			String complemento, String bairro, String localidade, String uf, String cep, String descricao, String foto,
+			String cpf, String dataNasc, String escolaridade, String instituicao, String tempoAtuacao, String tecnologias, 
+			String redesSociais, String competencias, String cnh, boolean viagem, String idiomas) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.tel1 = tel1;
-		this.tel2 = tel2;
+		this.email = email;
+		this.fone = fone;
 		this.logradouro = logradouro;
 		this.numero = numero;
 		this.complemento = complemento;
@@ -49,7 +49,6 @@ public class CurriculoDTO {
 		this.escolaridade = escolaridade;
 		this.instituicao = instituicao;
 		this.tempoAtuacao = tempoAtuacao;
-		this.vagas = vagas;
 		this.tecnologias = tecnologias;
 		this.redesSociais = redesSociais;
 		this.competencias = competencias;
@@ -58,14 +57,14 @@ public class CurriculoDTO {
 		this.idiomas = idiomas;
 	}
 	
-	public CurriculoDTO(String nome, String tel1, String tel2, String logradouro, String numero, String complemento,
-			String bairro, String localidade, String uf, String cep, String descricao, String cpf, String dataNasc,
-			String escolaridade, String instituicao, String tempoAtuacao, String vagas, String tecnologias,
+	public CurriculoDTO(String nome, String email, String fone, String logradouro, String numero,
+			String complemento, String bairro, String localidade, String uf, String cep, String descricao, String foto,
+			String cpf, String dataNasc, String escolaridade, String instituicao, String tempoAtuacao, String tecnologias, 
 			String redesSociais, String competencias, String cnh, boolean viagem, String idiomas) {
 		super();
 		this.nome = nome;
-		this.tel1 = tel1;
-		this.tel2 = tel2;
+		this.email = email;
+		this.fone = fone;
 		this.logradouro = logradouro;
 		this.numero = numero;
 		this.complemento = complemento;
@@ -79,7 +78,6 @@ public class CurriculoDTO {
 		this.escolaridade = escolaridade;
 		this.instituicao = instituicao;
 		this.tempoAtuacao = tempoAtuacao;
-		this.vagas = vagas;
 		this.tecnologias = tecnologias;
 		this.redesSociais = redesSociais;
 		this.competencias = competencias;
@@ -100,18 +98,31 @@ public class CurriculoDTO {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public String getTel1() {
-		return tel1;
+
+	public String getEmail() {
+		return email;
 	}
-	public void setTel1(String tel1) {
-		this.tel1 = tel1;
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
-	public String getTel2() {
-		return tel2;
+
+	public String getFone() {
+		return fone;
 	}
-	public void setTel2(String tel2) {
-		this.tel2 = tel2;
+
+	public void setFone(String fone) {
+		this.fone = fone;
 	}
+
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
+
 	public String getLogradouro() {
 		return logradouro;
 	}
@@ -203,13 +214,6 @@ public class CurriculoDTO {
 	public void setTecnologias(String tecnologias) {
 		this.tecnologias = tecnologias;
 	}
-	public String getVagas() {
-		return vagas;
-	}
-	public void setVagas(String vagas) {
-		this.vagas = vagas;
-	}
-
 	public String getRedesSociais() {
 		return redesSociais;
 	}

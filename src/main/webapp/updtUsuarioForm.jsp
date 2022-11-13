@@ -101,7 +101,7 @@
 
 <!-- nome na barra: -->
 
-<title>Adicionar Novo Usuário</title>
+<title>Atualizar Usuário</title>
 
 </head>
 <body>
@@ -131,17 +131,10 @@
 			<div class="form-group">
 
 <!-- Se for pra atualizar: -->
-				<c:if test="${usuario != null}">
-					<form action="usuario?action=update" method="post">
-				</c:if>
-<!-- Se for pra inserir: -->
-				<c:if test="${usuario == null}">
-					<form action="usuario?action=insert" method="post">
-				</c:if>
-				<c:if test="${usuario != null}">
-					<input type="hidden" name="id" class="input-field"
-						value="<c:out value='${usuario.id}'/>" />
-				</c:if>
+				
+			<form action="usuario?action=update" method="post">
+				
+				<input type="hidden" name="id" class="input-field" value="<c:out value='${usuario.id}'/>" />
 
 <!-- Container do form em colunas: -->
 
@@ -152,7 +145,8 @@
 					<div class="form-group">
 						<label for="nome" id="nome-label">Nome<span style="color: red;">*</span></label> 
 						<input type="text" name="nome" id="nome" class="form-control" required
-							value="<c:out value='${usuario.nome}'/>">
+							value="<c:out value='${usuario.nome}'/>" > 
+							
 					</div>
 
 <!-- Div do email: -->

@@ -3,6 +3,8 @@ package sistemaVagas.dto;
 public class VagaDTO {
 	
     private int id;
+    private int candidato;
+    private int empresa;
 	private String cargo;
 	private String localidade;
 	private String uf;
@@ -14,10 +16,12 @@ public class VagaDTO {
 	private String descricao;
 	
 	
-	public VagaDTO(int id, String cargo, String localidade, String uf, String dataInclusao, int prazoCampo,
+	public VagaDTO(int id, int candidato, int empresa, String cargo, String localidade, String uf, String dataInclusao, int prazoCampo,
 			String prazoPagto, float valor, String experienciaDesejada, String descricao) {
 		super();
 		this.id = id;
+		this.candidato = candidato;
+		this.empresa = empresa;
 		this.cargo = cargo;
 		this.localidade = localidade;
 		this.uf = uf;
@@ -29,9 +33,11 @@ public class VagaDTO {
 		this.descricao = descricao;
 	}
 	
-	public VagaDTO(String cargo, String localidade, String uf, String dataInclusao, int prazoCampo, String prazoPagto,
+	public VagaDTO(int candidato, int empresa, String cargo, String localidade, String uf, String dataInclusao, int prazoCampo, String prazoPagto,
 			float valor, String experienciaDesejada, String descricao) {
 		super();
+		this.candidato = candidato;
+		this.empresa = empresa;
 		this.cargo = cargo;
 		this.localidade = localidade;
 		this.uf = uf;
@@ -104,6 +110,21 @@ public class VagaDTO {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	
+
+	public int getCandidato() {
+		return candidato;
+	}
+
+	public void setCandidato(int candidato) {
+		this.candidato = candidato;
+	}
+
+	public int getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(int empresa) {
+		this.empresa = empresa;
+	}
 	
 }
