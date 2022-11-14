@@ -58,8 +58,8 @@ public class CurriculoDAOImpl implements CurriculoDAO{
 		while (resultSet.next()) {
 			int id = resultSet.getInt("id");
 			String nome = resultSet.getString("nome");
-			String tel1 = resultSet.getString("tel1");
-			String tel2 = resultSet.getString("tel2");
+			String email = resultSet.getString("email");
+			String fone = resultSet.getString("fone");
 			String logradouro= resultSet.getString("logradouro");
 			String numero = resultSet.getString("numero");
 			String complemento = resultSet.getString("complemento");
@@ -68,12 +68,12 @@ public class CurriculoDAOImpl implements CurriculoDAO{
 			String uf = resultSet.getString("uf");
 			String cep = resultSet.getString("cep");
 			String descricao = resultSet.getString("descricao");
+			String foto = resultSet.getString("foto");
 			String cpf = resultSet.getString("cpf");
 			String dataNasc = resultSet.getString("dataNasc");
 			String escolaridade = resultSet.getString("escolaridade");
 			String instituicao = resultSet.getString("instituicao");
 			String tempoAtuacao = resultSet.getString("tempoAtuacao");
-			String vagas = resultSet.getString("vagas");
 			String tecnologias = resultSet.getString("tecnologias");
 			String redesSociais = resultSet.getString("redesSociais");
 			String competencias = resultSet.getString("competencias");
@@ -84,8 +84,8 @@ public class CurriculoDAOImpl implements CurriculoDAO{
 			CurriculoDTO curriculo = new CurriculoDTO(
 					id,
 					nome,
-					tel1,
-					tel2,
+					email,
+					fone,
 					logradouro,
 					numero,
 					complemento,
@@ -94,12 +94,12 @@ public class CurriculoDAOImpl implements CurriculoDAO{
 					uf,
 					cep,
 					descricao,
+					foto,
 					cpf,
 					dataNasc,
 					escolaridade,
 					instituicao,
 					tempoAtuacao,
-					vagas,
 					tecnologias,
 					redesSociais,
 					competencias,
@@ -122,8 +122,8 @@ public class CurriculoDAOImpl implements CurriculoDAO{
 	public boolean addNewCurriculo(CurriculoDTO newCurriculo) throws SQLException {
 		String sqlInsert = "INSERT INTO curriculo ("
 				+ "nome, "
-				+ "tel1, "
-				+ "tel2, "
+				+ "email, "
+				+ "fone, "
 				+ "logradouro, "
 				+ "numero, "
 				+ "complemento, "
@@ -132,12 +132,12 @@ public class CurriculoDAOImpl implements CurriculoDAO{
 				+ "uf, "
 				+ "cep, "
 				+ "descricao, "
+				+ "foto, "
 				+ "cpf, "
 				+ "dataNasc, "
 				+ "escolaridade, "
 				+ "instituicao, "
 				+ "tempoAtuacao, "
-				+ "vagas, "
 				+ "tecnologias, "
 				+ "redesSociaos, "
 				+ "competencias, "
@@ -148,8 +148,8 @@ public class CurriculoDAOImpl implements CurriculoDAO{
 		connect();
 		PreparedStatement statement = jdbcConnection.prepareStatement(sqlInsert);
 		statement.setString(1, newCurriculo.getNome());
-		statement.setString(2, newCurriculo.getTel1());
-		statement.setString(3, newCurriculo.getTel2());
+		statement.setString(2, newCurriculo.getEmail());
+		statement.setString(3, newCurriculo.getFone());
 		statement.setString(4, newCurriculo.getLogradouro());
 		statement.setString(5, newCurriculo.getNumero());
 		statement.setString(6, newCurriculo.getComplemento());
@@ -158,18 +158,18 @@ public class CurriculoDAOImpl implements CurriculoDAO{
 		statement.setString(9, newCurriculo.getUf());
 		statement.setString(10, newCurriculo.getCep());
 		statement.setString(11, newCurriculo.getDescricao());
+		statement.setString(11, newCurriculo.getFoto());
 		statement.setString(12, newCurriculo.getCpf());
 		statement.setString(13, newCurriculo.getDataNasc());
 		statement.setString(14, newCurriculo.getEscolaridade());
 		statement.setString(15, newCurriculo.getInstituicao());
 		statement.setString(16, newCurriculo.getTempoAtuacao());
-		statement.setString(17, newCurriculo.getVagas());
-		statement.setString(18, newCurriculo.getTecnologias());
-		statement.setString(19, newCurriculo.getRedesSociais());
-		statement.setString(20, newCurriculo.getCompetencias());
-		statement.setString(21, newCurriculo.getCnh());
-		statement.setBoolean(22, newCurriculo.getViagem());
-		statement.setString(23, newCurriculo.getIdiomas());
+		statement.setString(17, newCurriculo.getTecnologias());
+		statement.setString(18, newCurriculo.getRedesSociais());
+		statement.setString(19, newCurriculo.getCompetencias());
+		statement.setString(20, newCurriculo.getCnh());
+		statement.setBoolean(21, newCurriculo.getViagem());
+		statement.setString(22, newCurriculo.getIdiomas());
 		
 		boolean rowInserted = statement.executeUpdate() > 0;
 		statement.close();
@@ -181,8 +181,8 @@ public class CurriculoDAOImpl implements CurriculoDAO{
 	public boolean updateCurriculo(CurriculoDTO curriculo) throws SQLException {
 		String sql = "UPDATE curriculo SET "
 				+ "nome, "
-				+ "tel1, "
-				+ "tel2, "
+				+ "email, "
+				+ "fone, "
 				+ "logradouro, "
 				+ "numero, "
 				+ "complemento, "
@@ -191,12 +191,12 @@ public class CurriculoDAOImpl implements CurriculoDAO{
 				+ "uf, "
 				+ "cep, "
 				+ "descricao, "
+				+ "foto, "
 				+ "cpf, "
 				+ "dataNasc, "
 				+ "escolaridade, "
 				+ "instituicao, "
 				+ "tempoAtuacao, "
-				+ "vagas, "
 				+ "tecnologias, "
 				+ "redesSociaos, "
 				+ "competencias, "
@@ -208,8 +208,8 @@ public class CurriculoDAOImpl implements CurriculoDAO{
 		
 		PreparedStatement statement = jdbcConnection.prepareStatement(sql);
 		statement.setString(1, curriculo.getNome());
-		statement.setString(2, curriculo.getTel1());
-		statement.setString(3, curriculo.getTel2());
+		statement.setString(2, curriculo.getEmail());
+		statement.setString(3, curriculo.getFone());
 		statement.setString(4, curriculo.getLogradouro());
 		statement.setString(5, curriculo.getNumero());
 		statement.setString(6, curriculo.getComplemento());
@@ -218,19 +218,19 @@ public class CurriculoDAOImpl implements CurriculoDAO{
 		statement.setString(9, curriculo.getUf());
 		statement.setString(10, curriculo.getCep());
 		statement.setString(11, curriculo.getDescricao());
+		statement.setString(11, curriculo.getFoto());
 		statement.setString(12, curriculo.getCpf());
 		statement.setString(13, curriculo.getDataNasc());
 		statement.setString(14, curriculo.getEscolaridade());
 		statement.setString(15, curriculo.getInstituicao());
 		statement.setString(16, curriculo.getTempoAtuacao());
-		statement.setString(17, curriculo.getVagas());
-		statement.setString(18, curriculo.getTecnologias());
-		statement.setString(19, curriculo.getRedesSociais());
-		statement.setString(20, curriculo.getCompetencias());
-		statement.setString(21, curriculo.getCnh());
-		statement.setBoolean(22, curriculo.getViagem());
-		statement.setString(23, curriculo.getIdiomas());
-		statement.setInt(24, curriculo.getId());
+		statement.setString(17, curriculo.getTecnologias());
+		statement.setString(18, curriculo.getRedesSociais());
+		statement.setString(19, curriculo.getCompetencias());
+		statement.setString(20, curriculo.getCnh());
+		statement.setBoolean(21, curriculo.getViagem());
+		statement.setString(22, curriculo.getIdiomas());
+		statement.setInt(23, curriculo.getId());
 		
 		boolean rowUpdated = statement.executeUpdate() > 0;
 		statement.close();
@@ -267,8 +267,8 @@ public class CurriculoDAOImpl implements CurriculoDAO{
 		
 		if (resultSet.next()) {
 			String nome = resultSet.getString("nome");
-			String tel1 = resultSet.getString("tel1");
-			String tel2 = resultSet.getString("tel2");
+			String email = resultSet.getString("email");
+			String fone = resultSet.getString("fone");
 			String logradouro= resultSet.getString("logradouro");
 			String numero = resultSet.getString("numero");
 			String complemento = resultSet.getString("complemento");
@@ -277,12 +277,12 @@ public class CurriculoDAOImpl implements CurriculoDAO{
 			String uf = resultSet.getString("uf");
 			String cep = resultSet.getString("cep");
 			String descricao = resultSet.getString("descricao");
+			String foto = resultSet.getString("foto");
 			String cpf = resultSet.getString("cpf");
 			String dataNasc = resultSet.getString("dataNasc");
 			String escolaridade = resultSet.getString("escolaridade");
 			String instituicao = resultSet.getString("instituicao");
 			String tempoAtuacao = resultSet.getString("tempoAtuacao");
-			String vagas = resultSet.getString("vagas");
 			String tecnologias = resultSet.getString("tecnologias");
 			String redesSociais = resultSet.getString("redesSociais");
 			String competencias = resultSet.getString("competencias");
@@ -293,8 +293,8 @@ public class CurriculoDAOImpl implements CurriculoDAO{
 			curriculo = new CurriculoDTO(
 					id, 
 					nome,
-					tel1,
-					tel2,
+					email,
+					fone,
 					logradouro,
 					numero,
 					complemento,
@@ -303,12 +303,12 @@ public class CurriculoDAOImpl implements CurriculoDAO{
 					uf,
 					cep,
 					descricao,
+					foto,
 					cpf,
 					dataNasc,
 					escolaridade,
 					instituicao,
 					tempoAtuacao,
-					vagas,
 					tecnologias,
 					redesSociais,
 					competencias,

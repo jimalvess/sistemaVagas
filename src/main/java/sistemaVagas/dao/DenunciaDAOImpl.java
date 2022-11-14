@@ -57,8 +57,8 @@ public class DenunciaDAOImpl implements DenunciaDAO{
 		
 		while (resultSet.next()) {
 			int id = resultSet.getInt("id");
-			String denunciante = resultSet.getString("denunciante");
-			String denunciado = resultSet.getString("denunciado");
+			int denunciante = resultSet.getInt("denunciante");
+			int denunciado = resultSet.getInt("denunciado");
 			String tipo = resultSet.getString("tipo");
 			String detalhe = resultSet.getString("detalhe");
 			
@@ -90,8 +90,8 @@ public class DenunciaDAOImpl implements DenunciaDAO{
 				+ "VALUES (?, ?, ?, ?)";
 		connect();
 		PreparedStatement statement = jdbcConnection.prepareStatement(sqlInsert);
-		statement.setString(1, newDenuncia.getDenunciante());
-		statement.setString(2, newDenuncia.getDenunciado());
+		statement.setInt(1, newDenuncia.getDenunciante());
+		statement.setInt(2, newDenuncia.getDenunciado());
 		statement.setString(3, newDenuncia.getTipo());
 		statement.setString(4, newDenuncia.getDetalhe());
 		
@@ -112,8 +112,8 @@ public class DenunciaDAOImpl implements DenunciaDAO{
 		connect();
 		
 		PreparedStatement statement = jdbcConnection.prepareStatement(sql);
-		statement.setString(1, denuncia.getDenunciante());
-		statement.setString(2, denuncia.getDenunciado());
+		statement.setInt(1, denuncia.getDenunciante());
+		statement.setInt(2, denuncia.getDenunciado());
 		statement.setString(3, denuncia.getTipo());
 		statement.setString(4, denuncia.getDetalhe());
 		statement.setInt(5, denuncia.getId());
@@ -152,8 +152,8 @@ public class DenunciaDAOImpl implements DenunciaDAO{
 		ResultSet resultSet = statement.executeQuery();
 		
 		if (resultSet.next()) {
-			String denunciante = resultSet.getString("denunciante");
-			String denunciado = resultSet.getString("denunciado");
+			int denunciante = resultSet.getInt("denunciante");
+			int denunciado = resultSet.getInt("denunciado");
 			String tipo = resultSet.getString("tipo");
 			String detalhe = resultSet.getString("detalhe");
 			

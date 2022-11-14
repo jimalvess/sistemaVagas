@@ -8,8 +8,8 @@ INSERT INTO `sistemavagas`.`usuario` (
 `permissoes`, `vagas`, `redesSociais`, `denuncias`, `mensagens`, `cpf`, `dataNasc`, `escolaridade`, 
 `idiomas`, `competencias`, `fornecedor`, `cnpj`, `site`) 
 VALUES ('1', 'laurindo', 'laurindo@guasca.com', '51985587878', 'rua feliz', '22', 'fundos', 
-'alegria', 'roscavo do sul', 'rs', '95784520', 'lindo', 'linkfoto', 5, 'laurindo', '12345', 
-'adm', 'sem vaga', 'orkutes', 'sem denuncia', 'sem mensagem', '66545878523', '20/12/2021', 'formado',  
+'alegria', 'roscavo do sul', 'rs', '95784520', 'lindo', 'linkfoto', true, 'laurindo', '12345', 
+'adm', 3, 'orkutes', 2, '5', '66545878523', '20/12/2021', 'formado',  
 'ingles', 'eita', false, '123', 'www.laurindo.com');
 
 INSERT INTO `sistemavagas`.`usuario` (
@@ -18,8 +18,8 @@ INSERT INTO `sistemavagas`.`usuario` (
 `permissoes`, `vagas`, `redesSociais`, `denuncias`, `mensagens`, `cpf`, `dataNasc`, `escolaridade`, 
 `idiomas`, `competencias`, `fornecedor`, `cnpj`, `site`) 
 VALUES ('2', 'juca', 'juca@bala.com', '51235698778', 'rua triste', '422', 'frente', 
-'alisblau', 'almeida prado', 'sp', '56989852', 'feio', 'linkfoto', 2, 'juca', '12345',  
-'adm', 'com vaga', 'orkutel', 'com denuncia', 'com mensagem', '225469874', '15/05/1960', 'conformado',  
+'alisblau', 'almeida prado', 'sp', '56989852', 'feio', 'linkfoto', true, 'juca', '12345',  
+'adm', 2, 'orkutel', 1, 3, '225469874', '15/05/1960', 'conformado',  
 'espanhol', 'eita pleura', true, '123', 'www.juca.com');
 
 select * from usuario;

@@ -5,10 +5,10 @@ public class MensagemDTO {
     private int id;
 	private String assunto;
 	private String detalhe;
-	private String emissor;
-	private String destinatario;
+	private int emissor;
+	private int destinatario;
 	
-	public MensagemDTO(int id, String assunto, String detalhe, String emissor, String destinatario) {
+	public MensagemDTO(int id, String assunto, String detalhe, int emissor, int destinatario) {
 		super();
 		this.id = id;
 		this.assunto = assunto;
@@ -17,7 +17,7 @@ public class MensagemDTO {
 		this.destinatario = destinatario;
 	}
 	
-	public MensagemDTO(String assunto, String detalhe, String emissor, String destinatario) {
+	public MensagemDTO(String assunto, String detalhe, int emissor, int destinatario) {
 		super();
 		this.assunto = assunto;
 		this.detalhe = detalhe;
@@ -43,16 +43,16 @@ public class MensagemDTO {
 	public void setDetalhe(String detalhe) {
 		this.detalhe = detalhe;
 	}
-	public String getEmissor() {
+	public int getEmissor() {
 		return emissor;
 	}
-	public void setEmissor(String emissor) {
+	public void setEmissor(int emissor) {
 		this.emissor = emissor;
 	}
-	public String getDestinatario() {
+	public int getDestinatario() {
 		return destinatario;
 	}
-	public void setDestinatario(String destinatario) {
+	public void setDestinatario(int destinatario) {
 		this.destinatario = destinatario;
 	}
 

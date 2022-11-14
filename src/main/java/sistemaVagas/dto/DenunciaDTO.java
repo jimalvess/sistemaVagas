@@ -3,12 +3,12 @@ package sistemaVagas.dto;
 public class DenunciaDTO {
 	
     private int id;
-	private String denunciante;
-	private String denunciado;
+	private int denunciante;
+	private int denunciado;
 	private String tipo;
 	private String detalhe;
 	
-	public DenunciaDTO(int id, String denunciante, String denunciado, String tipo, String detalhe) {
+	public DenunciaDTO(int id, int denunciante, int denunciado, String tipo, String detalhe) {
 		super();
 		this.id = id;
 		this.denunciante = denunciante;
@@ -17,7 +17,7 @@ public class DenunciaDTO {
 		this.detalhe = detalhe;
 	}
 	
-	public DenunciaDTO(String denunciante, String denunciado, String tipo, String detalhe) {
+	public DenunciaDTO(int denunciante, int denunciado, String tipo, String detalhe) {
 		super();
 		this.denunciante = denunciante;
 		this.denunciado = denunciado;
@@ -31,16 +31,16 @@ public class DenunciaDTO {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getDenunciante() {
+	public int getDenunciante() {
 		return denunciante;
 	}
-	public void setDenunciante(String denunciante) {
+	public void setDenunciante(int denunciante) {
 		this.denunciante = denunciante;
 	}
-	public String getDenunciado() {
+	public int getDenunciado() {
 		return denunciado;
 	}
-	public void setDenunciado(String denunciado) {
+	public void setDenunciado(int denunciado) {
 		this.denunciado = denunciado;
 	}
 	public String getTipo() {

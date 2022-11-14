@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,19 +43,25 @@ public class VagaDAOImpl implements VagaDAO {
 		}
 	}
 	
+//LISTA VAGAS DUM USUÁRIO. SERVE PRA EMPRESA OU CANDIDATO:	
+	
 	@Override
-	public List<VagaDTO> getAllVagas() throws SQLException {
+	public List<VagaDTO> getAllVagas(int usuarioId) throws SQLException {
 		List<VagaDTO> listVaga = new ArrayList<VagaDTO>();
 		
-		String sql = "SELECT * FROM vaga";
+		String sql = "SELECT * FROM vaga WHERE usuario_fk = ?";
 		
 		connect();
 		
-		Statement statement = jdbcConnection.createStatement();
-		ResultSet resultSet = statement.executeQuery(sql);
-		
+		PreparedStatement statement = jdbcConnection.prepareStatement(sql);
+	    statement.setInt(1, usuarioId);
+	    
+	    ResultSet resultSet = statement.executeQuery();
+	    
 		while (resultSet.next()) {
 			int id = resultSet.getInt("id");
+			int candidato = resultSet.getInt("candidato");
+			int empresa = resultSet.getInt("empresa");
 			String cargo = resultSet.getString("cargo");
 			String localidade = resultSet.getString("localidade");
 			String uf = resultSet.getString("uf");
@@ -69,6 +74,8 @@ public class VagaDAOImpl implements VagaDAO {
 			
 			VagaDTO vaga = new VagaDTO(
 					id, 
+					candidato,
+					empresa,
 					cargo, 
 					localidade, 
 					uf, 
@@ -93,6 +100,8 @@ public class VagaDAOImpl implements VagaDAO {
 	@Override
 	public boolean addNewVaga(VagaDTO newVaga) throws SQLException {
 		String sqlInsert = "INSERT INTO vaga ("
+				+ "candidato, "
+				+ "empresa, "
 				+ "cargo, "
 				+ "localidade, "
 				+ "uf, "
@@ -102,9 +111,11 @@ public class VagaDAOImpl implements VagaDAO {
 				+ "valor, "
 				+ "experienciaDesejada, "
 				+ "descricao) "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		connect();
 		PreparedStatement statement = jdbcConnection.prepareStatement(sqlInsert);
+		statement.setInt(1, newVaga.getCandidato());
+		statement.setInt(1, newVaga.getEmpresa());
 		statement.setString(1, newVaga.getCargo());
 		statement.setString(2, newVaga.getLocalidade());
 		statement.setString(3, newVaga.getUf());
@@ -124,6 +135,8 @@ public class VagaDAOImpl implements VagaDAO {
 	@Override
 	public boolean updateVaga(VagaDTO vaga) throws SQLException {
 		String sql = "UPDATE vaga SET "
+				+ "candidato = ?, "
+				+ "empresa = ?, "
 				+ "cargo = ?, "
 				+ "localidade = ?, "
 				+ "uf = ?, "
@@ -182,6 +195,8 @@ public class VagaDAOImpl implements VagaDAO {
 		ResultSet resultSet = statement.executeQuery();
 		
 		if (resultSet.next()) {
+			int candidato = resultSet.getInt("candidato");
+			int empresa = resultSet.getInt("empresa");
 			String cargo = resultSet.getString("cargo");
 			String localidade = resultSet.getString("localidade");
 			String uf = resultSet.getString("uf");
@@ -194,6 +209,8 @@ public class VagaDAOImpl implements VagaDAO {
 			
 			vaga = new VagaDTO(
 					id, 
+					candidato,
+					empresa,
 					cargo, 
 					localidade, 
 					uf, 

@@ -60,10 +60,10 @@ public class UsuarioController extends HttpServlet {
 				String login = request.getParameter("login");
 				String senha = request.getParameter("senha");
 				String permissoes = request.getParameter("permissoes");
-				String vagas = request.getParameter("vagas");
+				int vagas = Integer.parseInt(request.getParameter("vagas"));
 				String redesSociais = request.getParameter("redesSociais");
-				String denuncias = request.getParameter("denuncias");
-				String mensagens = request.getParameter("mensagens");
+				int denuncias = Integer.parseInt(request.getParameter("denuncias"));
+				int mensagens = Integer.parseInt(request.getParameter("mensagens"));
 				String cpf = request.getParameter("cpf");
 				String dataNasc = request.getParameter("dataNasc");
 				String escolaridade = request.getParameter("escolaridade");
@@ -106,13 +106,92 @@ public class UsuarioController extends HttpServlet {
 				this.usuarioService.addNewUsuario(newUsuario);
 				response.sendRedirect("usuario");
 				break;
+				
 			case "delete":
+				Integer id = Integer.parseInt(request.getParameter("id"));
+
+				UsuarioDTO userToDel = new UsuarioDTO(
+						id,
+						nome = request.getParameter("nome"),
+						email = request.getParameter("email"),
+						fone = request.getParameter("fone"),
+						logradouro = request.getParameter("logradouro"),
+						numero = request.getParameter("numero"),
+						complemento = request.getParameter("complemento"),
+						bairro = request.getParameter("bairro"),
+						localidade = request.getParameter("localidade"),
+						uf = request.getParameter("uf"),
+						cep = request.getParameter("cep"),
+						descricao = request.getParameter("descricao"),
+						foto = request.getParameter("foto"),
+						status = Boolean.getBoolean(request.getParameter("status")),
+						login = request.getParameter("login"),
+						senha = request.getParameter("senha"),
+						permissoes = request.getParameter("permissoes"),
+						vagas = Integer.parseInt(request.getParameter("vagas")),
+						redesSociais = request.getParameter("redesSociais"),
+						denuncias = Integer.parseInt(request.getParameter("denuncias")),
+						mensagens = Integer.parseInt(request.getParameter("mensagens")),
+						cpf = request.getParameter("cpf"),
+						dataNasc = request.getParameter("dataNasc"),
+						escolaridade = request.getParameter("escolaridade"),
+						idiomas = request.getParameter("idiomas"),
+						competencias = request.getParameter("competencias"),
+						fornecedor = Boolean.getBoolean(request.getParameter("fornecedor")),
+						cnpj = request.getParameter("cnpj"),
+						site = request.getParameter("site"));
+				
+				this.usuarioService.deleteUsuario(userToDel);
+				response.sendRedirect("usuario");
+				
 				break;
-			case "edit":
-				this.showEditForm(request, response);
-				break;
+				
 			case "update":
-				this.updateUsuario(request, response);
+				
+				this.usuarioService.getUsuarioById(Integer.parseInt(request.getParameter("id")));
+				
+				
+				dispatcher = request.getRequestDispatcher("updtUsuarioForm.jsp");
+				dispatcher.forward(request, response);
+
+				/*
+				 Integer id = Integer.parseInt(request.getParameter("id"));
+
+				UsuarioDTO userToDel = new UsuarioDTO(
+						id,
+						nome = request.getParameter("nome"),
+						email = request.getParameter("email"),
+						fone = request.getParameter("fone"),
+						logradouro = request.getParameter("logradouro"),
+						numero = request.getParameter("numero"),
+						complemento = request.getParameter("complemento"),
+						bairro = request.getParameter("bairro"),
+						localidade = request.getParameter("localidade"),
+						uf = request.getParameter("uf"),
+						cep = request.getParameter("cep"),
+						descricao = request.getParameter("descricao"),
+						foto = request.getParameter("foto"),
+						status = Boolean.getBoolean(request.getParameter("status")),
+						login = request.getParameter("login"),
+						senha = request.getParameter("senha"),
+						permissoes = request.getParameter("permissoes"),
+						vagas = request.getParameter("vagas"),
+						redesSociais = request.getParameter("redesSociais"),
+						denuncias = request.getParameter("denuncias"),
+						mensagens = request.getParameter("mensagens"),
+						cpf = request.getParameter("cpf"),
+						dataNasc = request.getParameter("dataNasc"),
+						escolaridade = request.getParameter("escolaridade"),
+						idiomas = request.getParameter("idiomas"),
+						competencias = request.getParameter("competencias"),
+						fornecedor = Boolean.getBoolean(request.getParameter("fornecedor")),
+						cnpj = request.getParameter("cnpj"),
+						site = request.getParameter("site"));
+				
+				this.usuarioService.deleteUsuario(userToDel);
+				response.sendRedirect("usuario");
+				 */
+				
 				break;
 			default:
 				this.getListUsuario(request, response);
@@ -134,77 +213,4 @@ public class UsuarioController extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 	
-	private void showEditForm(HttpServletRequest request, HttpServletResponse response)
-			throws SQLException, ServletException, IOException {
-		int id = Integer.parseInt(request.getParameter("id"));
-		UsuarioDTO existingUsuario = this.usuarioService.getUsuarioById(id);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("newUsuarioForm.jsp");
-		request.setAttribute("usuario", existingUsuario);
-		dispatcher.forward(request, response);
-
-	}
-	private void updateUsuario(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
-		Integer id = Integer.parseInt(request.getParameter("id"));
-		String nome = request.getParameter("nome");
-		String email = request.getParameter("email");
-		String fone = request.getParameter("fone");
-		String logradouro = request.getParameter("logradouro");
-		String numero = request.getParameter("numero");
-		String complemento = request.getParameter("complemento");
-		String bairro = request.getParameter("bairro");
-		String localidade = request.getParameter("localidade");
-		String uf = request.getParameter("uf");
-		String cep = request.getParameter("cep");
-		String descricao = request.getParameter("descricao");
-		String foto = request.getParameter("foto");
-		Boolean status = Boolean.parseBoolean(request.getParameter("status"));
-		String login = request.getParameter("login");
-		String senha = request.getParameter("senha");
-		String permissoes = request.getParameter("permissoes");
-		String vagas = request.getParameter("vagas");
-		String redesSociais = request.getParameter("redesSociais");
-		String denuncias = request.getParameter("denuncias");
-		String mensagens = request.getParameter("mensagens");
-		String cpf = request.getParameter("cpf");
-		String dataNasc = request.getParameter("dataNasc");
-		String escolaridade = request.getParameter("escolaridade");
-		String idiomas = request.getParameter("idiomas");
-		String competencias = request.getParameter("competencias");
-		Boolean fornecedor = Boolean.parseBoolean(request.getParameter("fornecedor"));
-		String cnpj = request.getParameter("cnpj");
-		String site = request.getParameter("site");
-
-		UsuarioDTO newUsuario = new UsuarioDTO(
-				id,
-				nome,
-				email,
-				fone,
-				logradouro,
-				numero,
-				complemento,
-				bairro,
-				localidade,
-				uf,
-				cep,
-				descricao,
-				foto,
-				status,
-				login,
-				senha,
-				permissoes,
-				vagas,
-				redesSociais,
-				denuncias,
-				mensagens,
-				cpf,
-				dataNasc,
-				escolaridade,
-				idiomas,
-				competencias,
-				fornecedor,
-				cnpj,
-				site);
-		this.usuarioService.updateUsuario(newUsuario);
-		response.sendRedirect("usuario");
-	}
 }
