@@ -19,10 +19,10 @@ CREATE TABLE `usuario` (
   `login` varchar(30) NOT NULL,
   `senha` varchar(10) NOT NULL,
   `permissoes` varchar(255),
-  `vagas` int(6), 						
+  `vagas` int, 						
   `redesSociais` varchar(100),
-  `denuncias` int(6), 					
-  `mensagens` int(6), 					
+  `denuncias` int, 					
+  `mensagens` int, 					
   `cpf` varchar(15),
   `dataNasc` varchar(10) NOT NULL,
   `escolaridade` varchar(30) NOT NULL,
@@ -44,7 +44,7 @@ CREATE TABLE `vagas` (
   `localidade` varchar(25) NOT NULL,
   `uf` varchar(2) NOT NULL,
   `dataInclusao` varchar(10),
-  `prazoCampo` int(128) NULL,
+  `prazoCampo` int,
   `valor` float,
   `experienciaDesejada` varchar(300),
   `descricao` varchar(400) NOT NULL,
@@ -53,20 +53,18 @@ CREATE TABLE `vagas` (
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `usuario_vagas` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `usuario` INT NOT NULL,
+  `postador` INT NOT NULL,
+  `candidato` INT NOT NULL,
   `vagas` INT NOT NULL,
-  PRIMARY KEY (`usuario`, `vagas`),
-    CONSTRAINT `Constr_usuario_vagas_usuario_fk`
-        FOREIGN KEY `usuario_fk` (`usuario`) REFERENCES `usuario` (`id`)
-        ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT `Constr_usuario_vagas_vagas_fk`
-        FOREIGN KEY `vagas_fk` (`vagas`) REFERENCES `vagas` (`id`)
-        ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `denuncias` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `usuario` int(6) NOT NULL,
+  `usuario` int,
   `denunciante` varchar(60) NOT NULL,
   `denunciado` varchar(60) NOT NULL,
   `tipo` varchar(128) NOT NULL,
@@ -76,21 +74,9 @@ CREATE TABLE `denuncias` (
   UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
-CREATE TABLE `usuario_denuncias` (
-  `usuario` INT NOT NULL,
-  `denuncias` INT NOT NULL,
-  PRIMARY KEY (`usuario`, `denuncias`),
-    CONSTRAINT `Constr_usuario_denuncias_usuario_fk`
-        FOREIGN KEY `usuario_fk` (`usuario`) REFERENCES `usuario` (`id`)
-        ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT `Constr_usuario_denuncias_denuncias_fk`
-        FOREIGN KEY `denuncias_fk` (`denuncias`) REFERENCES `denuncias` (`id`)
-        ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
-
 CREATE TABLE `mensagens` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `usuario` int(6) NOT NULL,
+  `usuario` int,
   `assunto` varchar(100),
   `detalhe` varchar(400) NOT NULL,
   `emissor` varchar(60) NOT NULL,
@@ -100,22 +86,10 @@ CREATE TABLE `mensagens` (
   UNIQUE KEY `id_UNIQUE` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
-CREATE TABLE `usuario_mensagens` (
-  `usuario` INT NOT NULL,
-  `mensagens` INT NOT NULL,
-  PRIMARY KEY (`usuario`, `mensagens`),
-    CONSTRAINT `Constr_usuario_mensagens_usuario_fk`
-        FOREIGN KEY `usuario_fk` (`usuario`) REFERENCES `usuario` (`id`)
-        ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT `Constr_usuario_mensagens_mensagens_fk`
-        FOREIGN KEY `mensagens_fk` (`mensagens`) REFERENCES `mensagens` (`id`)
-        ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
-
 CREATE TABLE `curriculo` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `usuario` int(6) NOT NULL,
-  `email` varchar(15),
+  `usuario` int,
+  `email` varchar(20),
   `fone` varchar(15),
   `logradouro` varchar(60),
   `numero` varchar(6),
@@ -126,7 +100,7 @@ CREATE TABLE `curriculo` (
   `cep` varchar(10),
   `descricao` varchar(400),
   `foto` varchar(255),
-  `cpf` varchar(10),
+  `cpf` varchar(15),
   `dataNasc` varchar(10),
   `escolaridade` varchar(30),
   `instituicao` varchar(30),
