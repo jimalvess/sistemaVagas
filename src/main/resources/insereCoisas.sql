@@ -73,7 +73,7 @@ UPDATE `sistemavagas`.`usuario_vagas` SET `vagas` = 2 WHERE (`id` = 1);
 
 ######## Adiciona campos em tabelas:
 
-ALTER TABLE usuario_vagas ADD candidato int AFTER postador;
+ALTER TABLE vagas ADD prazoPagto int AFTER prazoCampo;
 
 ######## seleciona tudo:
 
@@ -82,6 +82,7 @@ select * from vagas;
 select * from denuncias;
 select * from mensagens;
 select * from curriculo;
+select * from usuario_vagas;
 
 ######## seleciona pela id:
 

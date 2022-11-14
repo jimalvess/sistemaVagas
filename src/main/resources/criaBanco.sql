@@ -45,6 +45,7 @@ CREATE TABLE `vagas` (
   `uf` varchar(2) NOT NULL,
   `dataInclusao` varchar(10),
   `prazoCampo` int,
+  `prazoPagto` varchar(20),
   `valor` float,
   `experienciaDesejada` varchar(300),
   `descricao` varchar(400) NOT NULL,

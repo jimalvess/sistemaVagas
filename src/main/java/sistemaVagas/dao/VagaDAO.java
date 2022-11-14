@@ -8,11 +8,11 @@ import sistemaVagas.dto.VagaDTO;
 
 public interface VagaDAO {
 	
-	List<VagaDTO> getAllVagas(int usuarioId) throws SQLException;
-	boolean addNewVaga(VagaDTO newVaga) throws SQLException;
-	boolean updateVaga(VagaDTO vaga) throws SQLException;
-	boolean deleteVaga(VagaDTO vaga)throws SQLException;
+	List<VagaDTO> getAllVagasEmpresa(int usuarioId) throws SQLException;
+	List<VagaDTO> getAllVagasCandidato(int usuarioId) throws SQLException;
+	boolean postarVaga(VagaDTO newVaga) throws SQLException;
+	boolean editarVaga(VagaDTO vaga) throws SQLException;
+	boolean apagaVaga(VagaDTO vaga)throws SQLException;
 	VagaDTO getVagaById(int id) throws SQLException;
-	
 	
 }

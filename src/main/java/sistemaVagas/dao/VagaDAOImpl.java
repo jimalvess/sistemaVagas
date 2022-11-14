@@ -43,13 +43,67 @@ public class VagaDAOImpl implements VagaDAO {
 		}
 	}
 	
-//LISTA VAGAS DUM USUÁRIO. SERVE PRA EMPRESA OU CANDIDATO:	
+//LISTA VAGAS DUMA EMPRESA:	
 	
 	@Override
-	public List<VagaDTO> getAllVagas(int usuarioId) throws SQLException {
+	public List<VagaDTO> getAllVagasEmpresa(int usuarioId) throws SQLException {
 		List<VagaDTO> listVaga = new ArrayList<VagaDTO>();
 		
-		String sql = "SELECT * FROM vaga WHERE usuario_fk = ?";
+		String sql = "SELECT * FROM vagas join usuario_vagas WHERE postador = ?";
+		
+		connect();
+		
+		PreparedStatement statement = jdbcConnection.prepareStatement(sql);
+	    statement.setInt(1, usuarioId);
+	    
+	    ResultSet resultSet = statement.executeQuery();
+	    
+		while (resultSet.next()) {
+			int id = resultSet.getInt("id");
+			int candidato = resultSet.getInt("candidato");
+			int empresa = resultSet.getInt("empresa");
+			String cargo = resultSet.getString("cargo");
+			String localidade = resultSet.getString("localidade");
+			String uf = resultSet.getString("uf");
+			String dataInclusao = resultSet.getString("dataInclusao");
+			int prazoCampo = resultSet.getInt("prazoCampo");
+			String prazoPagto = resultSet.getString("prazoPagto");
+			float valor = resultSet.getFloat("valor");
+			String experienciaDesejada = resultSet.getString("experienciaDesejada");
+			String descricao = resultSet.getString("descricao");
+			
+			VagaDTO vaga = new VagaDTO(
+					id, 
+					candidato,
+					empresa,
+					cargo, 
+					localidade, 
+					uf, 
+					dataInclusao, 
+					prazoCampo, 
+					prazoPagto, 
+					valor, 
+					experienciaDesejada, 
+					descricao);
+			
+			listVaga.add(vaga);
+		}
+		
+		resultSet.close();
+		statement.close();
+		
+		disconnect();
+		
+		return listVaga;
+	}
+	
+//LISTA VAGAS QUE UM CARA SE CANDIDATOU:	
+
+	@Override
+	public List<VagaDTO> getAllVagasCandidato(int usuarioId) throws SQLException {
+		List<VagaDTO> listVaga = new ArrayList<VagaDTO>();
+		
+		String sql = "SELECT * FROM vagas join usuario_vagas WHERE candidato = ?";
 		
 		connect();
 		
@@ -98,7 +152,7 @@ public class VagaDAOImpl implements VagaDAO {
 	}
 	
 	@Override
-	public boolean addNewVaga(VagaDTO newVaga) throws SQLException {
+	public boolean postarVaga(VagaDTO newVaga) throws SQLException {
 		String sqlInsert = "INSERT INTO vaga ("
 				+ "candidato, "
 				+ "empresa, "
@@ -133,7 +187,7 @@ public class VagaDAOImpl implements VagaDAO {
 	}
 	
 	@Override
-	public boolean updateVaga(VagaDTO vaga) throws SQLException {
+	public boolean editarVaga(VagaDTO vaga) throws SQLException {
 		String sql = "UPDATE vaga SET "
 				+ "candidato = ?, "
 				+ "empresa = ?, "
@@ -168,7 +222,7 @@ public class VagaDAOImpl implements VagaDAO {
 	}
 	
 	@Override
-	public boolean deleteVaga(VagaDTO vaga) throws SQLException {
+	public boolean apagaVaga(VagaDTO vaga) throws SQLException {
 		String sql = "DELETE FROM vaga where id = ?";
 		
 		connect();

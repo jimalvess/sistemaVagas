@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import sistemaVagas.dto.UsuarioDTO;
+import sistemaVagas.dto.VagaDTO;
 
 public class UsuarioDAOImpl implements UsuarioDAO{
 	
@@ -42,6 +43,8 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 			jdbcConnection.close();
 		}
 	}
+	
+	//LISTAR TODOS OS USUARIOS:
 
 	@Override
 	public List<UsuarioDTO> getAllUsuarios() throws SQLException {
@@ -127,6 +130,8 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 		
 		return listUsuario;
 	}
+	
+	//ADICIONAR UM USUARIO:
 
 	@Override
 	public boolean addNewUsuario(UsuarioDTO newUsuario) throws SQLException {
@@ -197,6 +202,8 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 		return rowInserted;
 	}
 
+	//ATUALIZAR UM USUARIO:
+	
 	@Override
 	public boolean updateUsuario(UsuarioDTO usuario) throws SQLException {
 		String sql = "UPDATE usuario SET "
@@ -267,6 +274,8 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 		disconnect();
 		return rowUpdated;		
 	}
+	
+	//APAGAR UM USUARIO:
 
 	@Override
 	public boolean deleteUsuario(UsuarioDTO usuario) throws SQLException {
@@ -283,6 +292,8 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 		return rowDeleted;		
 	}
 
+	//LISTAR UM USUARIO:
+	
 	@Override
 	public UsuarioDTO getUsuarioById(int id) throws SQLException {
 		UsuarioDTO usuario = null;
@@ -363,5 +374,72 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 		return usuario;
 	}
 	
+			
+	//INSERIR ID DE POSTADOR NA VAGA (PEGA ID DELE NA SESSÃO):
+
+	@Override
+	public boolean inserirPostador(int idPostador, int idUsuarioVagas) throws SQLException {
+		String sql = "UPDATE `sistemavagas`.`usuario_vagas` "
+				+ "SET `postador` = " + idPostador + " WHERE (`id` = "+ idUsuarioVagas + ");";
+		
+		connect();
+		
+		int postador = idPostador;
+		int vaga = idUsuarioVagas;
+		
+		PreparedStatement statement = jdbcConnection.prepareStatement(sql);
+		statement.setInt(1, postador);
+		statement.setInt(2, vaga);
+		
+		boolean rowInserted = statement.executeUpdate() > 0;
+		statement.close();
+		disconnect();
+		return rowInserted;		
+	}
+		
+	//INSERIR ID DE VAGA NA VAGA (PEGA A ID DELA QUANDO MOSTRAR NA TELA):
+
+	@Override
+	public boolean inserirVagaNaVaga(int idVaga, int idUsuarioVagas) throws SQLException {
+		String sql = "UPDATE `sistemavagas`.`usuario_vagas` "
+				+ "SET `vaga` = " + idVaga + " WHERE (`id` = "+ idUsuarioVagas + ");";
+		
+		connect();
+		
+		int vaga = idVaga;
+		int usuarioVaga = idUsuarioVagas;
+		
+		PreparedStatement statement = jdbcConnection.prepareStatement(sql);
+		statement.setInt(1, vaga);
+		statement.setInt(2, usuarioVaga);
+		
+		boolean rowInserted = statement.executeUpdate() > 0;
+		statement.close();
+		disconnect();
+		return rowInserted;		
+	}
+		
+	//SE CANDIDATAR A UMA VAGA (PEGA ID DO CANDIDATO NA SESSÃO E A ID DA VAGA QUANDO MOSTRAR ELA NA TELA):
+
+	@Override
+	public boolean candidatarVaga(int idCandidato, int idVaga) throws SQLException {
+		String sql = "UPDATE `sistemavagas`.`usuario_vagas` "
+				+ "SET `candidato` = " + idCandidato + " WHERE (`id` = "+ idVaga + ");";
+		
+		connect();
+		
+		int candidato = idCandidato;
+		int vaga = idVaga;
+		
+		PreparedStatement statement = jdbcConnection.prepareStatement(sql);
+		statement.setInt(1, candidato);
+		statement.setInt(2, vaga);
+		
+		boolean rowInserted = statement.executeUpdate() > 0;
+		statement.close();
+		disconnect();
+		return rowInserted;		
+	}
+
 	
 }
