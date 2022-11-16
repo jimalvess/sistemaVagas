@@ -84,6 +84,10 @@ select * from mensagens;
 select * from curriculo;
 select * from usuario_vagas;
 
+SELECT * FROM vagas join usuario_vagas WHERE postador = 1;
+
+
+
 ######## seleciona pela id:
 
 select * from usuario where id = 1;

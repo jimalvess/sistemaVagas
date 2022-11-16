@@ -11,13 +11,13 @@ import java.util.List;
 
 import sistemaVagas.dto.CurriculoDTO;
 
-public class CurriculoDAOImpl implements CurriculoDAO{
-	
+public class CurriculoDAOImpl implements CurriculoDAO {
+
 	private String jdbcURL;
 	private String jdbcUsername;
 	private String jdbcPassword;
 	private Connection jdbcConnection;
-	
+
 	public CurriculoDAOImpl(String jdbcURL, String jdbcUsername, String jdbcPassword, Connection jdbcConnection) {
 		super();
 		this.jdbcURL = jdbcURL;
@@ -25,7 +25,7 @@ public class CurriculoDAOImpl implements CurriculoDAO{
 		this.jdbcPassword = jdbcPassword;
 		this.jdbcConnection = jdbcConnection;
 	}
-	
+
 	protected void connect() throws SQLException {
 		if (jdbcConnection == null || jdbcConnection.isClosed()) {
 			try {
@@ -33,34 +33,35 @@ public class CurriculoDAOImpl implements CurriculoDAO{
 			} catch (ClassNotFoundException e) {
 				throw new SQLException(e);
 			}
-			jdbcConnection = DriverManager.getConnection(
-										jdbcURL, jdbcUsername, jdbcPassword);
+			jdbcConnection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
 		}
 	}
-	
+
 	protected void disconnect() throws SQLException {
 		if (jdbcConnection != null && !jdbcConnection.isClosed()) {
 			jdbcConnection.close();
 		}
 	}
 	
+//LISTAR TODOS OS CURRICULOS	
+
 	@Override
 	public List<CurriculoDTO> getAllCurriculos() throws SQLException {
-		List<CurriculoDTO> listCurriculo= new ArrayList<CurriculoDTO>();
-		
+		List<CurriculoDTO> listCurriculo = new ArrayList<CurriculoDTO>();
+
 		String sql = "SELECT * FROM curriculo";
-		
+
 		connect();
-		
+
 		Statement statement = jdbcConnection.createStatement();
 		ResultSet resultSet = statement.executeQuery(sql);
-		
+
 		while (resultSet.next()) {
 			int id = resultSet.getInt("id");
 			String nome = resultSet.getString("nome");
 			String email = resultSet.getString("email");
 			String fone = resultSet.getString("fone");
-			String logradouro= resultSet.getString("logradouro");
+			String logradouro = resultSet.getString("logradouro");
 			String numero = resultSet.getString("numero");
 			String complemento = resultSet.getString("complemento");
 			String bairro = resultSet.getString("bairro");
@@ -80,70 +81,30 @@ public class CurriculoDAOImpl implements CurriculoDAO{
 			String cnh = resultSet.getString("cnh");
 			boolean viagem = resultSet.getBoolean("viagem");
 			String idiomas = resultSet.getString("idiomas");
-			
-			CurriculoDTO curriculo = new CurriculoDTO(
-					id,
-					nome,
-					email,
-					fone,
-					logradouro,
-					numero,
-					complemento,
-					bairro,
-					localidade,
-					uf,
-					cep,
-					descricao,
-					foto,
-					cpf,
-					dataNasc,
-					escolaridade,
-					instituicao,
-					tempoAtuacao,
-					tecnologias,
-					redesSociais,
-					competencias,
-					cnh,
-					viagem,
-					idiomas);
-			
+
+			CurriculoDTO curriculo = new CurriculoDTO(id, nome, email, fone, logradouro, numero, complemento, bairro,
+					localidade, uf, cep, descricao, foto, cpf, dataNasc, escolaridade, instituicao, tempoAtuacao,
+					tecnologias, redesSociais, competencias, cnh, viagem, idiomas);
+
 			listCurriculo.add(curriculo);
 		}
-		
+
 		resultSet.close();
 		statement.close();
-		
+
 		disconnect();
-		
+
 		return listCurriculo;
 	}
+
+//ADICIONAR UM CURRICULO
 	
 	@Override
 	public boolean addNewCurriculo(CurriculoDTO newCurriculo) throws SQLException {
-		String sqlInsert = "INSERT INTO curriculo ("
-				+ "nome, "
-				+ "email, "
-				+ "fone, "
-				+ "logradouro, "
-				+ "numero, "
-				+ "complemento, "
-				+ "bairro, "
-				+ "localidade, "
-				+ "uf, "
-				+ "cep, "
-				+ "descricao, "
-				+ "foto, "
-				+ "cpf, "
-				+ "dataNasc, "
-				+ "escolaridade, "
-				+ "instituicao, "
-				+ "tempoAtuacao, "
-				+ "tecnologias, "
-				+ "redesSociaos, "
-				+ "competencias, "
-				+ "cnh, "
-				+ "viagem, "
-				+ "idiomas) "
+		String sqlInsert = "INSERT INTO curriculo (" + "nome, " + "email, " + "fone, " + "logradouro, " + "numero, "
+				+ "complemento, " + "bairro, " + "localidade, " + "uf, " + "cep, " + "descricao, " + "foto, " + "cpf, "
+				+ "dataNasc, " + "escolaridade, " + "instituicao, " + "tempoAtuacao, " + "tecnologias, "
+				+ "redesSociaos, " + "competencias, " + "cnh, " + "viagem, " + "idiomas) "
 				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		connect();
 		PreparedStatement statement = jdbcConnection.prepareStatement(sqlInsert);
@@ -170,42 +131,23 @@ public class CurriculoDAOImpl implements CurriculoDAO{
 		statement.setString(20, newCurriculo.getCnh());
 		statement.setBoolean(21, newCurriculo.getViagem());
 		statement.setString(22, newCurriculo.getIdiomas());
-		
+
 		boolean rowInserted = statement.executeUpdate() > 0;
 		statement.close();
 		disconnect();
 		return rowInserted;
 	}
 	
+//ATUALIZAR UM CURRICULO	
+
 	@Override
 	public boolean updateCurriculo(CurriculoDTO curriculo) throws SQLException {
-		String sql = "UPDATE curriculo SET "
-				+ "nome, "
-				+ "email, "
-				+ "fone, "
-				+ "logradouro, "
-				+ "numero, "
-				+ "complemento, "
-				+ "bairro, "
-				+ "localidade, "
-				+ "uf, "
-				+ "cep, "
-				+ "descricao, "
-				+ "foto, "
-				+ "cpf, "
-				+ "dataNasc, "
-				+ "escolaridade, "
-				+ "instituicao, "
-				+ "tempoAtuacao, "
-				+ "tecnologias, "
-				+ "redesSociaos, "
-				+ "competencias, "
-				+ "cnh, "
-				+ "viagem, "
-				+ "idiomas"
-				+ " WHERE id = ?";
+		String sql = "UPDATE curriculo SET " + "nome, " + "email, " + "fone, " + "logradouro, " + "numero, "
+				+ "complemento, " + "bairro, " + "localidade, " + "uf, " + "cep, " + "descricao, " + "foto, " + "cpf, "
+				+ "dataNasc, " + "escolaridade, " + "instituicao, " + "tempoAtuacao, " + "tecnologias, "
+				+ "redesSociaos, " + "competencias, " + "cnh, " + "viagem, " + "idiomas" + " WHERE id = ?";
 		connect();
-		
+
 		PreparedStatement statement = jdbcConnection.prepareStatement(sql);
 		statement.setString(1, curriculo.getNome());
 		statement.setString(2, curriculo.getEmail());
@@ -231,45 +173,49 @@ public class CurriculoDAOImpl implements CurriculoDAO{
 		statement.setBoolean(21, curriculo.getViagem());
 		statement.setString(22, curriculo.getIdiomas());
 		statement.setInt(23, curriculo.getId());
-		
+
 		boolean rowUpdated = statement.executeUpdate() > 0;
 		statement.close();
 		disconnect();
-		return rowUpdated;		
+		return rowUpdated;
 	}
+	
+//APAGAR UM CURRICULO	
 
 	@Override
 	public boolean deleteCurriculo(CurriculoDTO curriculo) throws SQLException {
 		String sql = "DELETE FROM curriculo where id = ?";
-		
+
 		connect();
-		
+
 		PreparedStatement statement = jdbcConnection.prepareStatement(sql);
 		statement.setInt(1, curriculo.getId());
-		
+
 		boolean rowDeleted = statement.executeUpdate() > 0;
 		statement.close();
 		disconnect();
-		return rowDeleted;		
+		return rowDeleted;
 	}
 	
+//PEGAR UM CURRICULO PARA LER	
+
 	@Override
 	public CurriculoDTO getCurriculoById(int id) throws SQLException {
 		CurriculoDTO curriculo = null;
 		String sql = "SELECT * FROM curriculo WHERE id = ?";
-		
+
 		connect();
-		
+
 		PreparedStatement statement = jdbcConnection.prepareStatement(sql);
 		statement.setInt(1, id);
-		
+
 		ResultSet resultSet = statement.executeQuery();
-		
+
 		if (resultSet.next()) {
 			String nome = resultSet.getString("nome");
 			String email = resultSet.getString("email");
 			String fone = resultSet.getString("fone");
-			String logradouro= resultSet.getString("logradouro");
+			String logradouro = resultSet.getString("logradouro");
 			String numero = resultSet.getString("numero");
 			String complemento = resultSet.getString("complemento");
 			String bairro = resultSet.getString("bairro");
@@ -289,37 +235,15 @@ public class CurriculoDAOImpl implements CurriculoDAO{
 			String cnh = resultSet.getString("cnh");
 			boolean viagem = resultSet.getBoolean("viagem");
 			String idiomas = resultSet.getString("idiomas");
-			
-			curriculo = new CurriculoDTO(
-					id, 
-					nome,
-					email,
-					fone,
-					logradouro,
-					numero,
-					complemento,
-					bairro,
-					localidade,
-					uf,
-					cep,
-					descricao,
-					foto,
-					cpf,
-					dataNasc,
-					escolaridade,
-					instituicao,
-					tempoAtuacao,
-					tecnologias,
-					redesSociais,
-					competencias,
-					cnh,
-					viagem,
-					idiomas);
+
+			curriculo = new CurriculoDTO(id, nome, email, fone, logradouro, numero, complemento, bairro, localidade, uf,
+					cep, descricao, foto, cpf, dataNasc, escolaridade, instituicao, tempoAtuacao, tecnologias,
+					redesSociais, competencias, cnh, viagem, idiomas);
 		}
-		
+
 		resultSet.close();
 		statement.close();
-		
+
 		return curriculo;
 	}
 }

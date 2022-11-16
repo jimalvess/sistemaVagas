@@ -9,23 +9,24 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import sistemaVagas.dto.DenunciaDTO;
+import sistemaVagas.dto.MensagemDTO;
 import sistemaVagas.dto.UsuarioDTO;
-import sistemaVagas.dto.VagaDTO;
 
-public class UsuarioDAOImpl implements UsuarioDAO{
-	
+public class UsuarioDAOImpl implements UsuarioDAO {
+
 	private String jdbcURL;
 	private String jdbcUsername;
 	private String jdbcPassword;
 	private Connection jdbcConnection;
-	
+
 	public UsuarioDAOImpl(String jdbcURL, String jdbcUsername, String jdbcPassword) {
 		super();
 		this.jdbcURL = jdbcURL;
 		this.jdbcUsername = jdbcUsername;
 		this.jdbcPassword = jdbcPassword;
 	}
-	
+
 	protected void connect() throws SQLException {
 		if (jdbcConnection == null || jdbcConnection.isClosed()) {
 			try {
@@ -33,30 +34,29 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 			} catch (ClassNotFoundException e) {
 				throw new SQLException(e);
 			}
-			jdbcConnection = DriverManager.getConnection(
-										jdbcURL, jdbcUsername, jdbcPassword);
+			jdbcConnection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
 		}
 	}
-	
+
 	protected void disconnect() throws SQLException {
 		if (jdbcConnection != null && !jdbcConnection.isClosed()) {
 			jdbcConnection.close();
 		}
 	}
-	
-	//LISTAR TODOS OS USUARIOS:
+
+// LISTAR TODOS OS USUARIOS:
 
 	@Override
 	public List<UsuarioDTO> getAllUsuarios() throws SQLException {
 		List<UsuarioDTO> listUsuario = new ArrayList<UsuarioDTO>();
-		
+
 		String sql = "SELECT * FROM usuario";
-		
+
 		connect();
-		
+
 		Statement statement = jdbcConnection.createStatement();
 		ResultSet resultSet = statement.executeQuery(sql);
-		
+
 		while (resultSet.next()) {
 			Integer id = resultSet.getInt("id");
 			String nome = resultSet.getString("nome");
@@ -87,83 +87,31 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 			Boolean fornecedor = resultSet.getBoolean("fornecedor");
 			String cnpj = resultSet.getString("cnpj");
 			String site = resultSet.getString("site");
-			
-			UsuarioDTO usuario = new UsuarioDTO(
-					id,
-					nome,
-					email,
-					fone,
-					logradouro,
-					numero,
-					complemento,
-					bairro,
-					localidade,
-					uf,
-					cep,
-					descricao,
-					foto,
-					status,
-					login,
-					senha,
-					permissoes,
-					vagas,
-					redesSociais,
-					denuncias,
-					mensagens,
-					cpf,
-					dataNasc,
-					escolaridade,
-					idiomas,
-					competencias,
-					fornecedor,
-					cnpj,
-					site
-					);
-			
+
+			UsuarioDTO usuario = new UsuarioDTO(id, nome, email, fone, logradouro, numero, complemento, bairro,
+					localidade, uf, cep, descricao, foto, status, login, senha, permissoes, vagas, redesSociais,
+					denuncias, mensagens, cpf, dataNasc, escolaridade, idiomas, competencias, fornecedor, cnpj, site);
+
 			listUsuario.add(usuario);
 		}
-		
+
 		resultSet.close();
 		statement.close();
-		
+
 		disconnect();
-		
+
 		return listUsuario;
 	}
-	
-	//ADICIONAR UM USUARIO:
+
+// ADICIONAR UM USUARIO:
 
 	@Override
 	public boolean addNewUsuario(UsuarioDTO newUsuario) throws SQLException {
-		String sqlInsert = "INSERT INTO usuario ("
-				+ "nome, "
-				+ "email, "
-				+ "fone, "
-				+ "logradouro, "
-				+ "numero, "
-				+ "complemento, "
-				+ "bairro, "
-				+ "localidade, "
-				+ "uf, "
-				+ "cep, "
-				+ "descricao, "
-				+ "foto, "
-				+ "status, "
-				+ "login, "
-				+ "senha, "
-				+ "permissoes, "
-				+ "vagas, "
-				+ "redesSociais, "
-				+ "denuncias, "
-				+ "mensagens, "
-				+ "cpf, "
-				+ "dataNasc, "
-				+ "escolaridade, "
-				+ "idiomas, "
-				+ "competencias, "
-				+ "fornecedor, "
-				+ "cnpj, "
-				+ "site) "
+		String sqlInsert = "INSERT INTO usuario (" + "nome, " + "email, " + "fone, " + "logradouro, " + "numero, "
+				+ "complemento, " + "bairro, " + "localidade, " + "uf, " + "cep, " + "descricao, " + "foto, "
+				+ "status, " + "login, " + "senha, " + "permissoes, " + "vagas, " + "redesSociais, " + "denuncias, "
+				+ "mensagens, " + "cpf, " + "dataNasc, " + "escolaridade, " + "idiomas, " + "competencias, "
+				+ "fornecedor, " + "cnpj, " + "site) "
 				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		connect();
 		PreparedStatement statement = jdbcConnection.prepareStatement(sqlInsert);
@@ -195,49 +143,25 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 		statement.setBoolean(26, newUsuario.getFornecedor());
 		statement.setString(27, newUsuario.getCnpj());
 		statement.setString(28, newUsuario.getSite());
-		
+
 		boolean rowInserted = statement.executeUpdate() > 0;
 		statement.close();
 		disconnect();
 		return rowInserted;
 	}
 
-	//ATUALIZAR UM USUARIO:
-	
+// ATUALIZAR UM USUARIO:
+
 	@Override
 	public boolean updateUsuario(UsuarioDTO usuario) throws SQLException {
-		String sql = "UPDATE usuario SET "
-				+ "nome = ?, "
-				+ "email = ?, "
-				+ "fone = ?, "
-				+ "logradouro = ?, "
-				+ "numero = ?, "
-				+ "complemento = ?, "
-				+ "bairro = ?, "
-				+ "localidade = ?, "
-				+ "uf = ?, "
-				+ "cep = ?, "
-				+ "descricao = ?, "
-				+ "foto = ?, "
-				+ "status = ?, "
-				+ "login = ?, "
-				+ "senha = ?, "
-				+ "permissoes = ?, "
-				+ "vagas = ?, "
-				+ "redesSociais = ?, "
-				+ "denuncias = ?, "
-				+ "mensagens = ?, "
-				+ "cpf = ?, "
-				+ "dataNasc = ?, "
-				+ "escolaridade = ?, "
-				+ "idiomas = ?, "
-				+ "competencias = ?, "
-				+ "fornecedor = ?, "
-				+ "cnpj = ?, "
-				+ "site = ? "
-				+ " WHERE id = ?";
+		String sql = "UPDATE usuario SET " + "nome = ?, " + "email = ?, " + "fone = ?, " + "logradouro = ?, "
+				+ "numero = ?, " + "complemento = ?, " + "bairro = ?, " + "localidade = ?, " + "uf = ?, " + "cep = ?, "
+				+ "descricao = ?, " + "foto = ?, " + "status = ?, " + "login = ?, " + "senha = ?, " + "permissoes = ?, "
+				+ "vagas = ?, " + "redesSociais = ?, " + "denuncias = ?, " + "mensagens = ?, " + "cpf = ?, "
+				+ "dataNasc = ?, " + "escolaridade = ?, " + "idiomas = ?, " + "competencias = ?, " + "fornecedor = ?, "
+				+ "cnpj = ?, " + "site = ? " + " WHERE id = ?";
 		connect();
-		
+
 		PreparedStatement statement = jdbcConnection.prepareStatement(sql);
 		statement.setString(1, usuario.getNome());
 		statement.setString(2, usuario.getEmail());
@@ -268,44 +192,44 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 		statement.setString(27, usuario.getCnpj());
 		statement.setString(28, usuario.getSite());
 		statement.setInt(29, usuario.getId());
-		
+
 		boolean rowUpdated = statement.executeUpdate() > 0;
 		statement.close();
 		disconnect();
-		return rowUpdated;		
+		return rowUpdated;
 	}
-	
-	//APAGAR UM USUARIO:
+
+// APAGAR UM USUARIO:
 
 	@Override
 	public boolean deleteUsuario(UsuarioDTO usuario) throws SQLException {
 		String sql = "DELETE FROM usuario where id = ?";
-		
+
 		connect();
-		
+
 		PreparedStatement statement = jdbcConnection.prepareStatement(sql);
 		statement.setInt(1, usuario.getId());
-		
+
 		boolean rowDeleted = statement.executeUpdate() > 0;
 		statement.close();
 		disconnect();
-		return rowDeleted;		
+		return rowDeleted;
 	}
 
-	//LISTAR UM USUARIO:
-	
+// LISTAR UM USUARIO:
+
 	@Override
 	public UsuarioDTO getUsuarioById(int id) throws SQLException {
 		UsuarioDTO usuario = null;
 		String sql = "SELECT * FROM usuario WHERE id = ?";
-		
+
 		connect();
-		
+
 		PreparedStatement statement = jdbcConnection.prepareStatement(sql);
 		statement.setInt(1, id);
-		
+
 		ResultSet resultSet = statement.executeQuery();
-		
+
 		if (resultSet.next()) {
 			String nome = resultSet.getString("nome");
 			String email = resultSet.getString("email");
@@ -335,111 +259,231 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 			Boolean fornecedor = resultSet.getBoolean("fornecedor");
 			String cnpj = resultSet.getString("cnpj");
 			String site = resultSet.getString("site");
-			
-			usuario = new UsuarioDTO(
-					id,
-					nome,
-					email,
-					fone,
-					logradouro,
-					numero,
-					complemento,
-					bairro,
-					localidade,
-					uf,
-					cep,
-					descricao,
-					foto,
-					status,
-					login,
-					senha,
-					permissoes,
-					vagas,
-					redesSociais,
-					denuncias,
-					mensagens,
-					cpf,
-					dataNasc,
-					escolaridade,
-					idiomas,
-					competencias,
-					fornecedor,
-					cnpj,
-					site);
+
+			usuario = new UsuarioDTO(id, nome, email, fone, logradouro, numero, complemento, bairro, localidade, uf,
+					cep, descricao, foto, status, login, senha, permissoes, vagas, redesSociais, denuncias, mensagens,
+					cpf, dataNasc, escolaridade, idiomas, competencias, fornecedor, cnpj, site);
 		}
-		
+
 		resultSet.close();
 		statement.close();
-		
+
 		return usuario;
 	}
-	
-			
-	//INSERIR ID DE POSTADOR NA VAGA (PEGA ID DELE NA SESSÃO):
+
+// INSERIR ID DE POSTADOR NA VAGA (PEGA ID DELE NA SESSÃO):
 
 	@Override
 	public boolean inserirPostador(int idPostador, int idUsuarioVagas) throws SQLException {
-		String sql = "UPDATE `sistemavagas`.`usuario_vagas` "
-				+ "SET `postador` = " + idPostador + " WHERE (`id` = "+ idUsuarioVagas + ");";
-		
+		String sql = "UPDATE `sistemavagas`.`usuario_vagas` " + "SET `postador` = " + idPostador + " WHERE (`id` = "
+				+ idUsuarioVagas + ");";
+
 		connect();
-		
+
 		int postador = idPostador;
 		int vaga = idUsuarioVagas;
-		
+
 		PreparedStatement statement = jdbcConnection.prepareStatement(sql);
 		statement.setInt(1, postador);
 		statement.setInt(2, vaga);
-		
+
 		boolean rowInserted = statement.executeUpdate() > 0;
 		statement.close();
 		disconnect();
-		return rowInserted;		
+		return rowInserted;
 	}
-		
-	//INSERIR ID DE VAGA NA VAGA (PEGA A ID DELA QUANDO MOSTRAR NA TELA):
+
+// INSERIR ID DE VAGA NA VAGA (PEGA A ID DELA QUANDO MOSTRAR NA TELA):
 
 	@Override
 	public boolean inserirVagaNaVaga(int idVaga, int idUsuarioVagas) throws SQLException {
-		String sql = "UPDATE `sistemavagas`.`usuario_vagas` "
-				+ "SET `vaga` = " + idVaga + " WHERE (`id` = "+ idUsuarioVagas + ");";
-		
+		String sql = "UPDATE `sistemavagas`.`usuario_vagas` " + "SET `vaga` = " + idVaga + " WHERE (`id` = "
+				+ idUsuarioVagas + ");";
+
 		connect();
-		
+
 		int vaga = idVaga;
 		int usuarioVaga = idUsuarioVagas;
-		
+
 		PreparedStatement statement = jdbcConnection.prepareStatement(sql);
 		statement.setInt(1, vaga);
 		statement.setInt(2, usuarioVaga);
-		
+
 		boolean rowInserted = statement.executeUpdate() > 0;
 		statement.close();
 		disconnect();
-		return rowInserted;		
+		return rowInserted;
 	}
-		
-	//SE CANDIDATAR A UMA VAGA (PEGA ID DO CANDIDATO NA SESSÃO E A ID DA VAGA QUANDO MOSTRAR ELA NA TELA):
+
+// SE CANDIDATAR A UMA VAGA (PEGA ID DO CANDIDATO NA SESSÃO E A ID DA VAGA
+// QUANDO MOSTRAR ELA NA TELA):
 
 	@Override
 	public boolean candidatarVaga(int idCandidato, int idVaga) throws SQLException {
-		String sql = "UPDATE `sistemavagas`.`usuario_vagas` "
-				+ "SET `candidato` = " + idCandidato + " WHERE (`id` = "+ idVaga + ");";
-		
+		String sql = "UPDATE `sistemavagas`.`usuario_vagas` " + "SET `candidato` = " + idCandidato + " WHERE (`id` = "
+				+ idVaga + ");";
+
 		connect();
-		
+
 		int candidato = idCandidato;
 		int vaga = idVaga;
-		
+
 		PreparedStatement statement = jdbcConnection.prepareStatement(sql);
 		statement.setInt(1, candidato);
 		statement.setInt(2, vaga);
-		
+
 		boolean rowInserted = statement.executeUpdate() > 0;
 		statement.close();
 		disconnect();
-		return rowInserted;		
+		return rowInserted;
 	}
 
-	
+// CRIAR UMA MENSAGEM:
+
+	@Override
+	public boolean addNewMessage(MensagemDTO newMensagem, int idUsuario) throws SQLException {
+
+		String sqlInsert = "INSERT INTO mensagens (" + "usuario, " + "assunto, " + "detalhe, " + "emissor, "
+				+ "destinatario) " + "VALUES (?, ?, ?, ?, ?)";
+
+		connect();
+		PreparedStatement statement = jdbcConnection.prepareStatement(sqlInsert);
+		statement.setString(1, newMensagem.getUsuario());
+		statement.setString(2, newMensagem.getAssunto());
+		statement.setString(3, newMensagem.getDetalhe());
+		statement.setInt(4, idUsuario);
+		statement.setInt(5, newMensagem.getDestinatario());
+
+		boolean rowInserted = statement.executeUpdate() > 0;
+		statement.close();
+		disconnect();
+		return rowInserted;
+	}
+
+// LISTAR MENSAGENS DE UM USUARIO:
+
+	@Override
+	public List<MensagemDTO> getAllMensagens(int idUsuario) throws SQLException {
+		List<MensagemDTO> listMensagem = new ArrayList<MensagemDTO>();
+
+		String sql = "SELECT * FROM mensagem WHERE id = " + idUsuario + ";";
+
+		connect();
+
+		Statement statement = jdbcConnection.createStatement();
+		ResultSet resultSet = statement.executeQuery(sql);
+
+		while (resultSet.next()) {
+			int id = resultSet.getInt("id");
+			String assunto = resultSet.getString("assunto");
+			String detalhe = resultSet.getString("detalhe");
+			int emissor = resultSet.getInt("emissor");
+			int destinatario = resultSet.getInt("destinatario");
+
+			MensagemDTO mensagem = new MensagemDTO(id, assunto, detalhe, emissor, destinatario);
+
+			listMensagem.add(mensagem);
+		}
+
+		resultSet.close();
+		statement.close();
+
+		disconnect();
+
+		return listMensagem;
+	}
+
+// APAGAR MENSAGEM
+
+	@Override
+	public boolean deleteMensagem(MensagemDTO mensagem, int idUsuario) throws SQLException {
+		String sql = "DELETE FROM mensagem where id = ?";
+
+		connect();
+
+		PreparedStatement statement = jdbcConnection.prepareStatement(sql);
+		statement.setInt(1, idUsuario);
+
+		boolean rowDeleted = statement.executeUpdate() > 0;
+		statement.close();
+		disconnect();
+		return rowDeleted;
+	}
+
+// PEGAR MENSAGEM DE UM USUARIO PARA LER:
+
+	@Override
+	public MensagemDTO getMensagemById(int idUsuario) throws SQLException {
+		MensagemDTO mensagem = null;
+		String sql = "SELECT * FROM mensagem WHERE id = ?";
+
+		connect();
+
+		PreparedStatement statement = jdbcConnection.prepareStatement(sql);
+		statement.setInt(1, idUsuario);
+
+		ResultSet resultSet = statement.executeQuery();
+
+		if (resultSet.next()) {
+			String assunto = resultSet.getString("assunto");
+			String detalhe = resultSet.getString("detalhe");
+			int emissor = resultSet.getInt("emissor");
+			int destinatario = resultSet.getInt("destinatario");
+
+			mensagem = new MensagemDTO(idUsuario, assunto, detalhe, emissor, destinatario);
+		}
+
+		resultSet.close();
+		statement.close();
+
+		return mensagem;
+	}
+
+// CRIAR UMA DENUNCIA
+
+	@Override
+	public boolean addNewDenuncia(DenunciaDTO newDenuncia, int idUsuario) throws SQLException {
+		String sqlInsert = "INSERT INTO denuncia (" + "denunciante, " + "denunciado, " + "tipo, " + "detalhe) "
+				+ "VALUES (?, ?, ?, ?)";
+		connect();
+		PreparedStatement statement = jdbcConnection.prepareStatement(sqlInsert);
+		statement.setInt(1, idUsuario);
+		statement.setInt(2, newDenuncia.getDenunciado());
+		statement.setString(3, newDenuncia.getTipo());
+		statement.setString(4, newDenuncia.getDetalhe());
+
+		boolean rowInserted = statement.executeUpdate() > 0;
+		statement.close();
+		disconnect();
+		return rowInserted;
+	}
+
+// PEGAR TODAS AS DENUNCIAS DE UM DENUNCIANTE:
+
+	@Override
+	public DenunciaDTO getDenunciaById(int idUsuario) throws SQLException {
+		DenunciaDTO denuncia = null;
+		String sql = "SELECT * FROM denuncia WHERE denunciante = ?";
+
+		connect();
+
+		PreparedStatement statement = jdbcConnection.prepareStatement(sql);
+		statement.setInt(1, idUsuario);
+
+		ResultSet resultSet = statement.executeQuery();
+
+		if (resultSet.next()) {
+			int denunciante = resultSet.getInt("denunciante");
+			int denunciado = resultSet.getInt("denunciado");
+			String tipo = resultSet.getString("tipo");
+			String detalhe = resultSet.getString("detalhe");
+
+			denuncia = new DenunciaDTO(idUsuario, denunciante, denunciado, tipo, detalhe);
+		}
+
+		resultSet.close();
+		statement.close();
+
+		return denuncia;
+	}
 }

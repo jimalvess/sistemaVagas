@@ -11,12 +11,12 @@ import java.util.List;
 import sistemaVagas.dto.VagaDTO;
 
 public class VagaDAOImpl implements VagaDAO {
-	
+
 	private String jdbcURL;
 	private String jdbcUsername;
 	private String jdbcPassword;
 	private Connection jdbcConnection;
-	
+
 	public VagaDAOImpl(String jdbcURL, String jdbcUsername, String jdbcPassword, Connection jdbcConnection) {
 		super();
 		this.jdbcURL = jdbcURL;
@@ -24,7 +24,7 @@ public class VagaDAOImpl implements VagaDAO {
 		this.jdbcPassword = jdbcPassword;
 		this.jdbcConnection = jdbcConnection;
 	}
-	
+
 	protected void connect() throws SQLException {
 		if (jdbcConnection == null || jdbcConnection.isClosed()) {
 			try {
@@ -32,32 +32,31 @@ public class VagaDAOImpl implements VagaDAO {
 			} catch (ClassNotFoundException e) {
 				throw new SQLException(e);
 			}
-			jdbcConnection = DriverManager.getConnection(
-										jdbcURL, jdbcUsername, jdbcPassword);
+			jdbcConnection = DriverManager.getConnection(jdbcURL, jdbcUsername, jdbcPassword);
 		}
 	}
-	
+
 	protected void disconnect() throws SQLException {
 		if (jdbcConnection != null && !jdbcConnection.isClosed()) {
 			jdbcConnection.close();
 		}
 	}
-	
+
 //LISTA VAGAS DUMA EMPRESA:	
-	
+
 	@Override
 	public List<VagaDTO> getAllVagasEmpresa(int usuarioId) throws SQLException {
 		List<VagaDTO> listVaga = new ArrayList<VagaDTO>();
-		
+
 		String sql = "SELECT * FROM vagas join usuario_vagas WHERE postador = ?";
-		
+
 		connect();
-		
+
 		PreparedStatement statement = jdbcConnection.prepareStatement(sql);
-	    statement.setInt(1, usuarioId);
-	    
-	    ResultSet resultSet = statement.executeQuery();
-	    
+		statement.setInt(1, usuarioId);
+
+		ResultSet resultSet = statement.executeQuery();
+
 		while (resultSet.next()) {
 			int id = resultSet.getInt("id");
 			int candidato = resultSet.getInt("candidato");
@@ -71,47 +70,36 @@ public class VagaDAOImpl implements VagaDAO {
 			float valor = resultSet.getFloat("valor");
 			String experienciaDesejada = resultSet.getString("experienciaDesejada");
 			String descricao = resultSet.getString("descricao");
-			
-			VagaDTO vaga = new VagaDTO(
-					id, 
-					candidato,
-					empresa,
-					cargo, 
-					localidade, 
-					uf, 
-					dataInclusao, 
-					prazoCampo, 
-					prazoPagto, 
-					valor, 
-					experienciaDesejada, 
-					descricao);
-			
+
+			VagaDTO vaga = new VagaDTO(id, candidato, empresa, cargo, localidade, uf, dataInclusao, prazoCampo,
+					prazoPagto, valor, experienciaDesejada, descricao);
+
 			listVaga.add(vaga);
 		}
-		
+
 		resultSet.close();
 		statement.close();
-		
+
 		disconnect();
-		
+
 		return listVaga;
 	}
-	
+
 //LISTA VAGAS QUE UM CARA SE CANDIDATOU:	
 
 	@Override
 	public List<VagaDTO> getAllVagasCandidato(int usuarioId) throws SQLException {
 		List<VagaDTO> listVaga = new ArrayList<VagaDTO>();
-		
+
 		String sql = "SELECT * FROM vagas join usuario_vagas WHERE candidato = ?";
-		
+
 		connect();
-		
+
 		PreparedStatement statement = jdbcConnection.prepareStatement(sql);
-	    statement.setInt(1, usuarioId);
-	    
-	    ResultSet resultSet = statement.executeQuery();
-	    
+		statement.setInt(1, usuarioId);
+
+		ResultSet resultSet = statement.executeQuery();
+
 		while (resultSet.next()) {
 			int id = resultSet.getInt("id");
 			int candidato = resultSet.getInt("candidato");
@@ -125,47 +113,28 @@ public class VagaDAOImpl implements VagaDAO {
 			float valor = resultSet.getFloat("valor");
 			String experienciaDesejada = resultSet.getString("experienciaDesejada");
 			String descricao = resultSet.getString("descricao");
-			
-			VagaDTO vaga = new VagaDTO(
-					id, 
-					candidato,
-					empresa,
-					cargo, 
-					localidade, 
-					uf, 
-					dataInclusao, 
-					prazoCampo, 
-					prazoPagto, 
-					valor, 
-					experienciaDesejada, 
-					descricao);
-			
+
+			VagaDTO vaga = new VagaDTO(id, candidato, empresa, cargo, localidade, uf, dataInclusao, prazoCampo,
+					prazoPagto, valor, experienciaDesejada, descricao);
+
 			listVaga.add(vaga);
 		}
-		
+
 		resultSet.close();
 		statement.close();
-		
+
 		disconnect();
-		
+
 		return listVaga;
 	}
 	
+//POSTA UMA VAGA	
+
 	@Override
 	public boolean postarVaga(VagaDTO newVaga) throws SQLException {
-		String sqlInsert = "INSERT INTO vaga ("
-				+ "candidato, "
-				+ "empresa, "
-				+ "cargo, "
-				+ "localidade, "
-				+ "uf, "
-				+ "dataInclusao, "
-				+ "prazoCampo, "
-				+ "prazoPagto, "
-				+ "valor, "
-				+ "experienciaDesejada, "
-				+ "descricao) "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sqlInsert = "INSERT INTO vaga (" + "candidato, " + "empresa, " + "cargo, " + "localidade, " + "uf, "
+				+ "dataInclusao, " + "prazoCampo, " + "prazoPagto, " + "valor, " + "experienciaDesejada, "
+				+ "descricao) " + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		connect();
 		PreparedStatement statement = jdbcConnection.prepareStatement(sqlInsert);
 		statement.setInt(1, newVaga.getCandidato());
@@ -179,30 +148,22 @@ public class VagaDAOImpl implements VagaDAO {
 		statement.setFloat(7, newVaga.getValor());
 		statement.setString(8, newVaga.getExperienciaDesejada());
 		statement.setString(9, newVaga.getDescricao());
-		
+
 		boolean rowInserted = statement.executeUpdate() > 0;
 		statement.close();
 		disconnect();
 		return rowInserted;
 	}
 	
+//EDITA UMA VAGA	
+
 	@Override
 	public boolean editarVaga(VagaDTO vaga) throws SQLException {
-		String sql = "UPDATE vaga SET "
-				+ "candidato = ?, "
-				+ "empresa = ?, "
-				+ "cargo = ?, "
-				+ "localidade = ?, "
-				+ "uf = ?, "
-				+ "dataInclusao = ?, "
-				+ "prazoCampo = ?, "
-				+ "prazoPagto = ?, "
-				+ "valor = ?, "
-				+ "experienciaDesejada = ?, "
-				+ "descricao = ?"
-				+ " WHERE id = ?";
+		String sql = "UPDATE vaga SET " + "candidato = ?, " + "empresa = ?, " + "cargo = ?, " + "localidade = ?, "
+				+ "uf = ?, " + "dataInclusao = ?, " + "prazoCampo = ?, " + "prazoPagto = ?, " + "valor = ?, "
+				+ "experienciaDesejada = ?, " + "descricao = ?" + " WHERE id = ?";
 		connect();
-		
+
 		PreparedStatement statement = jdbcConnection.prepareStatement(sql);
 		statement.setString(1, vaga.getCargo());
 		statement.setString(2, vaga.getLocalidade());
@@ -214,40 +175,44 @@ public class VagaDAOImpl implements VagaDAO {
 		statement.setString(8, vaga.getExperienciaDesejada());
 		statement.setString(9, vaga.getDescricao());
 		statement.setInt(10, vaga.getId());
-		
+
 		boolean rowUpdated = statement.executeUpdate() > 0;
 		statement.close();
 		disconnect();
-		return rowUpdated;		
+		return rowUpdated;
 	}
 	
+//APAGA UMA VAGA	
+
 	@Override
 	public boolean apagaVaga(VagaDTO vaga) throws SQLException {
 		String sql = "DELETE FROM vaga where id = ?";
-		
+
 		connect();
-		
+
 		PreparedStatement statement = jdbcConnection.prepareStatement(sql);
 		statement.setInt(1, vaga.getId());
-		
+
 		boolean rowDeleted = statement.executeUpdate() > 0;
 		statement.close();
 		disconnect();
-		return rowDeleted;		
+		return rowDeleted;
 	}
 	
+//SELECIONA UMA VAGA	
+
 	@Override
 	public VagaDTO getVagaById(int id) throws SQLException {
 		VagaDTO vaga = null;
 		String sql = "SELECT * FROM vaga WHERE id = ?";
-		
+
 		connect();
-		
+
 		PreparedStatement statement = jdbcConnection.prepareStatement(sql);
 		statement.setInt(1, id);
-		
+
 		ResultSet resultSet = statement.executeQuery();
-		
+
 		if (resultSet.next()) {
 			int candidato = resultSet.getInt("candidato");
 			int empresa = resultSet.getInt("empresa");
@@ -260,25 +225,14 @@ public class VagaDAOImpl implements VagaDAO {
 			float valor = resultSet.getFloat("valor");
 			String experienciaDesejada = resultSet.getString("experienciaDesejada");
 			String descricao = resultSet.getString("descricao");
-			
-			vaga = new VagaDTO(
-					id, 
-					candidato,
-					empresa,
-					cargo, 
-					localidade, 
-					uf, 
-					dataInclusao, 
-					prazoCampo, 
-					prazoPagto, 
-					valor, 
-					experienciaDesejada, 
-					descricao);
+
+			vaga = new VagaDTO(id, candidato, empresa, cargo, localidade, uf, dataInclusao, prazoCampo, prazoPagto,
+					valor, experienciaDesejada, descricao);
 		}
-		
+
 		resultSet.close();
 		statement.close();
-		
+
 		return vaga;
 	}
 

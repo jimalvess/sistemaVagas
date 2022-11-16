@@ -9,9 +9,8 @@ import sistemaVagas.dto.UsuarioDTO;
 
 public class UsuarioServiceImpl implements UsuarioService {
 
-private UsuarioDAO usuarioDAO;
-	
-	
+	private UsuarioDAO usuarioDAO;
+
 	public UsuarioServiceImpl(String jdbcURL, String jdbcUsername, String jdbcPassword) {
 		this.usuarioDAO = new UsuarioDAOImpl(jdbcURL, jdbcUsername, jdbcPassword);
 	}
